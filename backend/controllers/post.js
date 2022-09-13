@@ -79,7 +79,7 @@ exports.deletePost = (req, res, next) => {
 };
 
 // Like d'un post
-exports.postLikes = (req, res, next) => {
+exports.likePost = (req, res, next) => {
   let postId = req.params.id
   let userId = req.body.userId
   let like = req.body.like
