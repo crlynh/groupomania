@@ -1,7 +1,7 @@
 <script>
 
 export default {
-    name: 'Login'
+    name: 'Signup'
 }
 
 </script>
@@ -36,11 +36,11 @@ export default {
               </div>
 
               <!-- Submit button -->
-                    <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-5" type="button">Se connecter</button>
+                    <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-5" type="button">S'inscrire</button>
                                 <div class="d-flex align-items-center justify-content-center pb-4">
-                    <p class="mb-0 me-2">Vous n'avez pas encore de compte ? </p>
-                    <router-link to="/signup">
-                        <button type="button" class="btn btn-outline-danger">Inscrivez-vous</button>
+                    <p class="mb-0 me-2">Vous avez déjà un compte? </p>
+                    <router-link to="/login">
+                        <button type="button" class="btn btn-outline-danger">Connectez-vous</button>
                     </router-link>
                   </div>
 
