@@ -1,10 +1,12 @@
 <script>
 import Login from './components/login.vue'
+import Navbar from './components/navbar.vue'
 
 export default {
   name: 'App', 
   components: {
-    Login
+    Login,
+    Navbar,
   }
 } 
 </script>
