@@ -15,7 +15,7 @@ export default {
         <div>
             <!-- Navbar brand -->
             <a class="navbar-brand" href="#">
-                <img src="../../assets/logo/icon-left-font-monochrome-white.png" height="60" alt="MDB Logo" loading="lazy" />
+                <img src="../assets/logo/icon-left-font-monochrome-white.png" height="60" alt="MDB Logo" loading="lazy" />
             </a>
         </div>
 
