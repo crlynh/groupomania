@@ -10,7 +10,7 @@ const password = require('../middleware/password');
 // importation midlleware/email
 const email = require('../middleware/email');
 
-router.post('/', password, email, userCtrl.signup, userCtrl.login);
+router.post('/signin', password, email, userCtrl.signup, userCtrl.login);
 // router.post('/login', userCtrl.login); 
 
 module.exports = router;
