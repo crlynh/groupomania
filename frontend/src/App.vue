@@ -1,14 +1,17 @@
 <script>
-import SignIn from './views/signin.vue'
-import Navbar from './components/navbar.vue'
-import HomePage from './views/homepage.vue'
+import login from './views/login.vue'
+import signup from './views/signup.vue'
+import home from './views/home.vue'
+import navbar from './components/navbar.vue'
+
 
 export default {
   name: 'App', 
   components: {
-    SignIn,
-    Navbar,
-    HomePage,
+    login,
+    signup,
+    navbar,
+    home,
   }
 } 
 </script>

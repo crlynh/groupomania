@@ -2,13 +2,14 @@ import "bootstrap/dist/css/bootstrap.css"
 import "bootstrap/dist/js/bootstrap.js"
 import { createRouter, createWebHistory } from 'vue-router'
 
-import SignIn from '../views/signin.vue'
-import HomePage from '../views/homepage.vue'
+import login from '../views/login.vue'
+import signup from '../views/signup.vue'
+import home from '../views/home.vue'
 
 const routes = [
-    { path: '/', component: SignIn },
-    { path: '/homepage', component: HomePage },
-    // { path: '/login', component: Login },
+    { path: '/login', component: login },
+    { path: '/signup', component: signup },
+    { path: '/home', component: home },
 ]
 
 const router = createRouter({

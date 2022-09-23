@@ -1,10 +1,10 @@
 <script>
-import Navbar from '../components/navbar.vue'
+import navbar from '../components/navbar.vue'
 
 export default {
-    name: 'HomePage',
+    name: 'home',
     components: {
-        Navbar,
+        navbar,
     }
 }
 </script>
