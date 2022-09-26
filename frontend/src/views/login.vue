@@ -1,7 +1,60 @@
 <script>
+import { mapState } from 'vuex'
+
 export default {
-    name: 'login'
-}
+    name: 'login',
+    data: function() {
+      return {
+        mode:'login',
+        email: '',
+        emailError:'',
+        password: '',
+        passwordError:'',
+        regEmail: /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/gim,
+        regPassword: /^(?=.*\d).{8,}$/gim,
+      }    
+  },
+    computed: {
+      validatedFields() {
+          if (this.email !== "" && this.password !== "") {
+            return true
+          } else {
+            return false
+          }
+        },
+      ...mapState(['status'])      
+    },
+    methods: {
+      isEmailValid() {
+        if (this.email !== "" && this.regEmail.test(this.email)) {
+          this.emailError = false;
+        } else {
+          this.emailError = true;
+        }
+      },
+      isPasswordValid() {
+        if (this.password !== "" && this.regPassword.test(this.password)) {
+          this.passwordError = false;
+        } else {
+        this.passwordError = true;
+        }  
+      },    
+      login() {
+        const self = this;
+        this.$store.dispatch('login', {
+          email: this.email,
+          password: this.password,
+        }).then ((response) => {
+          console.log(response);
+          self.$router.push('/home');
+        }, function(error) {
+          console.log(error)
+        })
+        } 
+    }
+} 
+
+
 </script>
 
 <template>
@@ -24,20 +77,43 @@ export default {
             <h4 class="text-secondary mb-4">CONNEXION</h4>
               <!-- Email input -->
               <div class="form-outline mb-4">
-                <input type="email" id="form3Example3" class="form-control" placeholder="Adresse mail"/>
+                <input 
+                  v-model="email"
+                  type="email" 
+                  id="form3Example3" 
+                  class="form-control" 
+                  placeholder="Adresse mail"
+                  @focusout="isEmailValid"/>
+                <p class="font-italic" v-if="emailError">Veuillez renseigner une adresse email correcte</p>
               </div>
 
               <!-- Password input -->
               <div class="form-outline mb-4">
-                <input type="password" id="form3Example4" class="form-control" placeholder="Mot de passe"/>
+                <input 
+                  v-model="password"
+                  type="password" 
+                  id="form3Example4" 
+                  class="form-control" 
+                  placeholder="Mot de passe"
+                  @focusout="isPasswordValid"/>
+                <p class="font-italic" v-if="passwordError">Votre mot de passe doit contenir au moins 8 caractères dont une majuscule et un chiffre</p>
               </div>
 
               <!-- Submit button -->
-                    <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-5" type="button">Se connecter</button>
+                    <button 
+                    :disabled="!validatedFields" 
+                    class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-5" 
+                    :class="{'button-disabled' : !validatedFields}"
+                    type="button"
+                    @click="login()"
+                    v-if="mode == 'login'">
+                        <span v-if="status == 'loading'"> Connexion en cours...</span>
+                        <span v-else>Se connecter</span>
+                    </button>
                                 <div class="d-flex align-items-center justify-content-center pb-4">
                     <p class="mb-0 me-2">Vous n'avez pas encore de compte ? </p>
                     <router-link to="/signup">
-                        <button type="button" class="btn btn-outline-danger">Inscrivez-vous</button>
+                        <button type="button" class="btn btn-outline-danger" >Inscrivez-vous</button>
                     </router-link>
                   </div>
 
