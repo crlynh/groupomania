@@ -1,9 +1,10 @@
 <script>
 import { mapState } from 'vuex'
+import axios from 'axios';
 
 export default {
     name: 'signup',
-    data: function() {
+    data() {
       return {
         mode:'login',
         nom: '',
@@ -19,8 +20,8 @@ export default {
       }    
   },
     computed: {
-      validatedFields: function() {
-          if (this.nom != "" && this.prenom != "" && this.email != "" && this.password != "") {
+      validatedFields() {
+          if (this.nom != "" && this.prenom != "" && this.email != "" && this.password != "" && this.emailError !== true && this.passwordError !== true) {
             return true;
           } else {
             return false;
@@ -43,20 +44,20 @@ export default {
         this.passwordError = true;
         }  
       },
-      signup() {
+      handleSubmit() {
         const self = this;
         this.$store.dispatch('signup', {
           nom: this.nom,
           prenom: this.prenom,
           email: this.email,
           password: this.password,
-        }).then ((response) => {
+          }).then ((response) => {
           console.log(response);
           self.$router.push('/login');
         }, function(error) {
           console.log(error)
         })
-        }
+        },
   }
 }
 </script>
@@ -77,7 +78,7 @@ export default {
               <h2 class="fw-bold">Bienvenue sur</h2>
               <img class= "mb-5" src="../assets/logo/icon-left-font-monochrome-black.png" style="width: 200px;" alt="Logo_Groupomania">
             </div>
-            <form>
+            <form @submit="handleSubmit">
             <h4 class="text-secondary mb-4">INSCRIPTION</h4>
 
                   <!-- 2 column grid layout with text inputs for the first and last names -->
@@ -138,7 +139,7 @@ export default {
                     class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-5" 
                     :class="{'button-disabled' : !validatedFields}"
                     type="button"
-                    @click="signup()">
+                    @click="handleSubmit()">
                         <span v-if="status == 'loading'">Inscription en cours...</span>
                         <span v-else>S'inscrire</span>
                     </button>

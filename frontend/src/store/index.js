@@ -2,7 +2,7 @@ import { createStore } from 'vuex'
 
 import axios from 'axios';
 const instance = axios.create({
-    baseURL: 'http://localhost:3000/api/users'
+    baseURL: 'http://localhost:3000/api/auth'
 })
 
 let user = localStorage.getItem('user');
@@ -28,7 +28,7 @@ const store = createStore({
   state: {
     status: '',
     user: user,
-    userInfos: {
+    data: {
       nom:'',
       prenom: '',
       email: '',
@@ -43,23 +43,16 @@ const store = createStore({
       localStorage.setItem('user', JSON.stringify(user));
       state.user = user;
     },
-    userInfos (state, userInfos) {
-      state.userInfos = userInfos;
+    data (state, data) {
+      state.data = data;
     },
-    // logout (state) {
-    //   state.user = {
-    //     userId: -1,
-    //     token: '',
-    //   }
-    //   localStorage.removeItem('user');
-    // }
   },
   actions: {
     // Connexion 
-    login: ({commit}, userInfos) => {
+    login: ({commit}, data) => {
       commit('setStatus', 'loading');
       return new Promise((resolve, reject) => {
-        instance.post('/login', userInfos)
+        instance.post('/login', data)
         .then(function (response) {
           commit('setStatus', 'login');
           commit('logUser', response.data);
@@ -74,16 +67,11 @@ const store = createStore({
       });
     },
     // Création de compte
-    signup: ({commit}, userInfos) => {
+    signup: ({commit}, data) => {
       commit('setStatus', 'loading');
       return new Promise((resolve, reject) => {
         commit;
-        instance.post('/signup', userInfos, {
-          headers:
-          {
-            "Content-Type": "multipart/form-data"
-          }
-        })
+        instance.post('/signup', data)
         .then(function (response) {
           commit('setStatus', 'created');
           resolve(response);

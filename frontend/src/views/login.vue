@@ -16,7 +16,7 @@ export default {
   },
     computed: {
       validatedFields() {
-          if (this.email !== "" && this.password !== "") {
+          if (this.email !== "" && this.password !== "" && this.emailError !== true && this.passwordError !== true) {
             return true
           } else {
             return false
@@ -38,22 +38,22 @@ export default {
         } else {
         this.passwordError = true;
         }  
-      },    
-      login() {
+      },   
+      
+      handleSubmit() {
         const self = this;
         this.$store.dispatch('login', {
           email: this.email,
           password: this.password,
-        }).then ((response) => {
+          }).then ((response) => {
           console.log(response);
           self.$router.push('/home');
         }, function(error) {
           console.log(error)
         })
-        } 
+        },
     }
 } 
-
 
 </script>
 
@@ -73,7 +73,7 @@ export default {
               <h2 class="fw-bold">Bienvenue sur</h2>
               <img class= "mb-5" src="../assets/logo/icon-left-font-monochrome-black.png" style="width: 200px;" alt="Logo_Groupomania">
             </div>
-            <form>
+            <form @submit="handleSubmit">
             <h4 class="text-secondary mb-4">CONNEXION</h4>
               <!-- Email input -->
               <div class="form-outline mb-4">
@@ -105,7 +105,7 @@ export default {
                     class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-5" 
                     :class="{'button-disabled' : !validatedFields}"
                     type="button"
-                    @click="login()"
+                    @click="handleSubmit()"
                     v-if="mode == 'login'">
                         <span v-if="status == 'loading'"> Connexion en cours...</span>
                         <span v-else>Se connecter</span>
