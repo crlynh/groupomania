@@ -22,7 +22,7 @@ export default {
         <div>
                 <div class="nav-item me-3 me-lg-0 d-flex justify-content-center align-items-center">
                     <a class="navbar-brand">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" height="25" alt="Black and White Portrait of a Man" loading="lazy" />
+                        <img src="../assets/images/png-clipart-computer-icons-user-profile-avatar-avatar-heroes-monochrome.png" class="rounded-circle" height="25" alt="Black and White Portrait of a Man" loading="lazy" />
                     </a>
                     <router-link to="/login">
                         <button type="button" class="btn btn-outline-light btn-sm">Se deconnecter</button>

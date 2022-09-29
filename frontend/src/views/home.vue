@@ -14,67 +14,62 @@ export default {
 
 <navbar></navbar>
 
-<section style="background-color: #eee;">
-
-  <div class="container my-5 py-5">
-    <div class="row d-flex justify-content-center">
-
-              <div class="card-footer py-3 border-0">
-            <div class="d-flex flex-start w-100">
-              <img class="rounded-circle shadow-1-strong me-3"
-                src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" alt="avatar" width="40"
-                height="40" />
-              <div class="form-outline w-100">
-                <textarea class="form-control" id="textAreaExample" rows="4"
-                  style="background: #fff;"></textarea>
-              </div>
-            </div>
-            <div class="float-end mt-2 pt-1">
+<div class="container mt-4 mb-5">
+    <div class="d-flex justify-content-center row">
+        <div class="col-md-8">
+            <div class="feed p-2">
+                <div class="d-flex d-flex justify-content-between  p-2 bg-white border">
+                                      <div class="feed-text px-2">
+                        <h6 class="text-black-50 mt-2">Quoi de neuf ?</h6>
+                    </div>        
               <button type="button" class="btn btn-danger btn-sm">
-                Post comment
+                + Ajouter un nouveau post
               </button>
+                </div>
+                <div class="bg-white border mt-2">
+                    <div>
+                        <div class="d-flex flex-row justify-content-between align-items-center p-2 border-bottom">
+                            <div class="d-flex flex-row align-items-center feed-text px-2"><img class="rounded-circle" src="../assets/images/png-clipart-computer-icons-user-profile-avatar-avatar-heroes-monochrome.png" width="45">
+                                <div class="d-flex flex-column flex-wrap ml-2"><span class="font-weight-bold">Thomson ben</span><span class="text-black-50 time">40 minutes ago</span></div>
+                            </div>
+                            <div class="feed-icon px-2"><font-awesome-icon icon="fa-solid fa-ellipsis-vertical" /></div>
+                        </div>
+                    </div>
+                    <div class="p-2 px-3"><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</span></div>
+                    <div class="feed-image p-2 px-3"><img class="img-fluid img-responsive" src="../assets/images/png-clipart-computer-icons-user-profile-avatar-avatar-heroes-monochrome.png"></div>                    
+                    <div class="d-flex justify-content-end socials p-2 py-3"><font-awesome-icon icon="fa-solid fa-thumbs-up" /></div>
+                </div>
             </div>
-          </div>
-
-      <div class="col-md-12 col-lg-10 col-xl-8">
-        <div class="card">
-          <div class="card-body">
-            <div class="d-flex flex-start align-items-center">
-              <img class="rounded-circle shadow-1-strong me-3"
-                src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" alt="avatar" width="60"
-                height="60" />
-              <div>
-                <h6 class="fw-bold text-danger mb-1">
-                  Jean Dupont
-                </h6>
-                <p class="text-muted small mb-0">
-                  Shared publicly - Jan 2020
-                </p>
-              </div>
-            </div>
-
-            <p class="mt-3 mb-4 pb-2">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-              veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-              consequat.
-            </p>
-
-            <div class="small d-flex justify-content-start">
-              <a href="#!" class="d-flex align-items-center me-3">
-                <i class="far fa-thumbs-up me-2"></i>
-                <p class="mb-0">Like</p>
-              </a>
-            </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
-</section>
-
+</div>
 
 </main>
 </template>
 
-<style></style>
+<style>
+body {
+  background-color:#eee
+  }
+
+.time {
+  font-size: 9px !important
+  }
+
+.socials {
+  margin-right: 14px;
+  font-size: 20px;
+  color: #d2c8c8;
+  cursor: pointer
+  }
+
+.feed-image img {
+  width: 100%;
+  height: auto
+  }
+
+.feed-text {
+  gap: 10px;
+}
+
+</style>

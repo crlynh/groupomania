@@ -62,7 +62,7 @@ const store = createStore({
         .catch(function (error) {
           commit('setStatus', 'error_login');
           reject(error);
-          alert("Echec de la connexion");
+          alert("Email et/ou mot de passe incorect");
         });
       });
     },
