@@ -134,8 +134,9 @@ export default {
 
 <style>
 
+
 .gradient-custom-2 {
-background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+background: linear-gradient(to right, #ee7724, #FD2D01, #dd3675, #b44593);
 --bs-btn-border-color: none;
 }
 
