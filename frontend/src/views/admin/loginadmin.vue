@@ -111,7 +111,7 @@ export default {
                         <span v-if="status == 'loading'"> Connexion en cours...</span>
                         <span v-else>Se connecter</span>
                     </button>
-                    <router-link to="/">
+                    <router-link to="/login">
                         <button type="button" class="btn btn-outline-dark btn-sm" >Retour</button>
                     </router-link>
                     </div>

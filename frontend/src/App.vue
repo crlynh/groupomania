@@ -1,6 +1,6 @@
 <script>
-import login from './views/public/login.vue'
-import signup from './views/public/signup.vue'
+import login from './views/auth/login.vue'
+import signup from './views/auth/signup.vue'
 import home from './views/public/home.vue'
 import card from './components/card.vue'
 import createpost from './views/public/createpost.vue'
