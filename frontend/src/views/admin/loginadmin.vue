@@ -2,10 +2,10 @@
 import { mapState } from 'vuex'
 
 export default {
-    name: 'login',
+    name: 'loginadmin',
     data: function() {
       return {
-        mode:'login',
+        mode:'loginadmin',
         email: '',
         emailError:'',
         password: '',
@@ -71,10 +71,10 @@ export default {
           <div class="card-body p-5 shadow-5">
             <div class = text-center>
               <h2 class="fw-bold">Bienvenue sur</h2>
-              <img class= "mb-5" src="../assets/logo/icon-left-font-monochrome-black.png" style="width: 200px;" alt="Logo_Groupomania">
+              <img class= "mb-5" src="../../assets/logo/icon-left-font-monochrome-black.png" style="width: 200px;" alt="Logo_Groupomania">
             </div>
             <form @submit="handleSubmit">
-            <h4 class="text-secondary mb-4">CONNEXION</h4>
+            <h4 class="text-secondary mb-4">CONNEXION ADMINISTRATEUR</h4>
               <!-- Email input -->
               <div class="form-outline mb-4">
                 <input 
@@ -100,29 +100,27 @@ export default {
               </div>
 
               <!-- Submit button -->
+                    <div class="d-flex justify-content-between flex-column">
                     <button 
                     :disabled="!validatedFields" 
                     class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-5" 
                     :class="{'button-disabled' : !validatedFields}"
                     type="button"
                     @click="handleSubmit()"
-                    v-if="mode == 'login'">
+                    >
                         <span v-if="status == 'loading'"> Connexion en cours...</span>
                         <span v-else>Se connecter</span>
                     </button>
-                                <div class="d-flex align-items-center justify-content-center pb-4">
-                    <p class="mb-0 me-2">Vous n'avez pas encore de compte ? </p>
-                    <router-link to="/signup">
-                        <button type="button" class="btn btn-outline-danger" >Inscrivez-vous</button>
+                    <router-link to="/">
+                        <button type="button" class="btn btn-outline-dark btn-sm" >Retour</button>
                     </router-link>
-                  </div>
-
+                    </div>
             </form>
           </div>
         </div>
       </div>
             <div class="col-lg-6 mb-5 mb-lg-0 d-none d-lg-block d-xl-block"> 
-        <img src="../assets/logo/icon.500ae8c5.png" class="w-100 rounded-4 shadow-4"
+        <img src="../../assets/logo/icon.500ae8c5.png" class="w-100 rounded-4 shadow-4"
           alt="" />
             </div>
     </div>

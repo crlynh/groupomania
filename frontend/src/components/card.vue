@@ -35,28 +35,13 @@ export default {
 </template>
 
 <style>
-.like {
-background-color:transparent;
+
+
+.like{
 margin-right: 10px;
 font-size: 20px;
-color: pink;
 cursor: pointer;
--webkit-transition: 200ms;
-transition: 200ms;
 }
-
-/* .thumbs1 {
-color: transparent;
-}
-
-.like:hover {
-color: transparent;
-background-clip: text;
--webkit-background-clip: text;
-background-image: linear-gradient(to right, #ee7724, #FD2D01, #dd3675, #b44593);
-transform: scale(1.05);
-cursor: pointer;
-}  */
 
 .feed-image img {
 width: 100%;

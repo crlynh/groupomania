@@ -22,13 +22,24 @@ exports.createPost = (req, res, next) => {
   const postObject = JSON.parse(req.body.post);
   delete postObject._id;
   delete postObject._userId;
+  const title = req.body.title;
+  const description = req.body.description;
   const post = new Post({
       ...postObject,
       userId: req.auth.userId,
+      title: req.body.title,
+      description: req.body.description,
       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-      likes: 0,
-      usersLiked: [""], 
+      // likes: 0,
+      // usersLiked: [""], 
   });
+
+  if (title == "") {
+    return res.status(400).json({message: 'Champ manquant'});
+  }
+  if (title.length <= titleMinLength || title.length >= titleMaxlength) {
+    return res.status(400).json({message: 'Champ invalide'});
+  }
 
   post.save()
   .then(() => res.status(201).json({message: 'Post enregistré !'}))
@@ -58,7 +69,7 @@ exports.modifyPost = (req, res, next) => {
       });
 };
 
-// Suppréssion d'une post
+// Suppression d'un post
 exports.deletePost = (req, res, next) => {
   Post.findOne({ _id: req.params.id})
       .then(post => {

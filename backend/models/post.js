@@ -4,11 +4,10 @@ const mongoose = require('mongoose');
 
 // models: données utilisateur pour le page du frontend
 const postSchema = mongoose.Schema({
-  userId: { type: String, required: true },
-  name: { type: String, required: true },
+  userId: { type: String },
   title: { type: String, required: true },
-  description: { type: String, required: true },
-  imageUrl: { type: String, required: true },
+  description: { type: String },
+  imageUrl: { type: String },
 
   // système de like 
   likes: { type: Number, defaut: 0 },

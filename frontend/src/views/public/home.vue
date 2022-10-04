@@ -1,7 +1,7 @@
 <script>
-import navbar from '../components/navbar.vue'
-import footerpage from '../components/footer.vue'
-import card from '../components/card.vue'
+import navbar from '../../components/navbar.vue'
+import footerpage from '../../components/footer.vue'
+import card from '../../components/card.vue'
 
 export default {
     name: 'home',
@@ -33,6 +33,8 @@ export default {
                 </button>
               </router-link>
                 </div>
+                <card></card>
+                <card></card>
                 <card></card>
             </div>
         </div>
