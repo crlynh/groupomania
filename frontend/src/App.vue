@@ -6,7 +6,7 @@ import card from './components/card.vue'
 import createpost from './views/public/createpost.vue'
 import navbar from './components/navbar.vue'
 import footerpage from './components/footer.vue'
-import loginadmin from './views/admin/loginadmin.vue'
+import adminNavbar from './components/adminNavbar.vue'
 
 
 export default {
@@ -19,7 +19,7 @@ export default {
     home,
     card,
     createpost,
-    loginadmin,
+    adminNavbar
   }
 } 
 </script>

@@ -46,7 +46,7 @@ export default {
           email: this.email,
           password: this.password,
           }).then ((response) => {
-          console.log(response);
+          console.log(response.data);
           self.$router.push('/home');
         }, function(error) {
           console.log(error)
@@ -116,12 +116,7 @@ export default {
                     <router-link to="/signup">
                         <button type="button" class="btn btn-outline-danger" >Inscrivez-vous</button>
                     </router-link>
-                  </div>
-                  <div class="d-flex align-items-center justify-content-center">
-                    <router-link to="/loginadmin">
-                      <button type="button" class="btn btn-outline-dark btn-sm" >Connexion en tant qu'administrateur</button>
-                    </router-link>
-                  </div>
+                    </div>          
             </form>
           </div>
         </div>

@@ -1,7 +1,12 @@
 <script>
 
 export default {
-    name: 'navbar'
+    name: 'navbar',
+    methods: {
+        logout() {
+            localStorage.removeItem('user')
+        }
+    }
 }
 
 </script>
@@ -19,12 +24,19 @@ export default {
         </div>
 
         <div>
-                <div class="nav-item me-3 me-lg-0 d-flex justify-content-center align-items-center">
-                    <a class="navbar-brand">
-                        <img src="../assets/images/png-clipart-computer-icons-user-profile-avatar-avatar-heroes-monochrome.png" class="rounded-circle shadow-4" height="25" alt="Black and White Portrait of a Man" loading="lazy" />
-                    </a>
-                    <router-link to="/login">
-                        <button type="button" class="btn btn-outline-light btn-sm">Se deconnecter</button>
+                <div class="nav-item me-3 me-lg-0 d-flex justify-content-center align-items-center"  style="gap:10px">
+                    <div class="d-flex align-items-center">
+                        <router-link to="/admin/home">
+                        <a>Accéder au compte admin</a>
+                        </router-link>
+                    </div>
+                    <router-link to="/login">  |
+                        <button 
+                        type="button" 
+                        class="btn btn-outline-light btn-sm"
+                        @click="logout()">
+                        Se deconnecter
+                        </button>
                     </router-link>
                 </div>
         </div>
@@ -37,6 +49,11 @@ export default {
 
 .navbar {
     background-color: #4E5166;
+}
+
+a {
+    text-decoration: none;
+    color: black;
 }
 
 </style>

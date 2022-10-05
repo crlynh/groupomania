@@ -2,42 +2,53 @@ import "bootstrap/dist/css/bootstrap.css"
 import "bootstrap/dist/js/bootstrap.js"
 import { createRouter, createWebHistory } from 'vue-router'
 
-import login from '../views/public/login.vue'
-import signup from '../views/public/signup.vue'
-import home from '../views/public/home.vue'
-import createpost from '../views/public/createpost.vue'
-import loginadmin from '../views/admin/loginadmin.vue'
-import publicLayout from '../views/public/layout.vue'
-import adminLayout from '../views/admin/layout.vue'
+import * as Auth from '../views/auth'
+import * as Public from '../views/public'
+import * as Admin from '../views/admin'
+
+import { authGuard } from '../_helpers/auth-guard.js'
 
 const routes = [
     { 
         path: '/', 
+        name: 'login',
         redirect: '/login',
-        component: publicLayout, 
+        component: Public.publicLayout,
         children: [
-            { path: '/home', component: home },
-            { path: '/createpost', component: createpost },
+            { path: '/home', component: Public.home },
+            { path: '/createpost', component: Public.createpost },
         ],
     },
 
     { 
-        path: '/admin', 
-        redirect:'/adminlogin',
-        component: adminLayout, 
-        children: [
-            { path: '/loginadmin', component: loginadmin },
+        path: '/admin',
+        name: 'admin',
+        component: Admin.adminLayout, 
+        children: [ 
+            { path: '/admin/home', component: Admin.home },
+            { path: '/admin/post/edit', component: Admin.editpost },
+            { path: '/admin/users/edit/:id', component: Admin.editusers, props: true }
         ],
     },
 
-        { path: '/login', component: login },
-        { path: '/signup', component: signup },
+        { path: '/login', component: Auth.login },
+        { path: '/signup', component: Auth.signup },
         { path: '/:pathMatch(.*)*', redirect:'/login'},
 ]
 
 const router = createRouter({
     history: createWebHistory(),
     routes,
+})
+
+router.beforeEach((to, from, next) => {
+    if(to.matched[0].name == 'admin') {
+        authGuard()
+    }
+    if(to.matched[0].name == 'login') {
+        authGuard()
+    }
+    next()
 })
 
 export default router;

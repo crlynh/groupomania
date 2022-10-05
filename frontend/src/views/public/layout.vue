@@ -6,9 +6,10 @@ export default {
 </script>>
 
 <template>
-    <div>Public Layout
+    <main> 
+        Public Layout
     <router-view></router-view>
-    </div>
+    </main>
 </template>
 
 <style>

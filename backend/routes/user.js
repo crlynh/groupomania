@@ -1,10 +1,16 @@
 const express = require('express');
 const router = express.Router();
 
-// importation controllers/user.js
-const userCtrl = require('../controllers/user');
+const userCtrl = require('../controllers/user')
 
-router.post('/login', userCtrl.login); 
-router.post('/signup', userCtrl.signup);
+router.use( (req, res, next) => {
+    const event = new Date()
+    console.log('User Time:', event.toString())
+    next()
+})
 
-module.exports = router;
+router.get('/', userCtrl.getAllUsers)
+router.get('/:id', userCtrl.getOneUser)
+router.delete('/:id', userCtrl.deleteUser)
+
+module.exports = router

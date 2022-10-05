@@ -6,9 +6,11 @@ export default {
 </script>>
 
 <template>
-    <div>Admin Layout
+    <main>
+        Admin Layout
+
     <router-view></router-view>
-    </div>
+    </main>
 </template>
 
 <style>

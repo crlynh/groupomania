@@ -11,7 +11,7 @@ export default {
     data() {
 		return {
 			formData: {
-				user_id: '633aefe073d6da83df13d3b3',
+				userId: '633aefe073d6da83df13d3b3',
         		title: '',
         		description: '',
 				file:'',
@@ -49,6 +49,7 @@ export default {
 		// },
 
 		createPost(e) {
+			const token = this.$store.state.user.token;
 			axios.post("http://localhost:3000/api/post/create", {
 				title: this.formData.title, 
 				description: this.formData.description
