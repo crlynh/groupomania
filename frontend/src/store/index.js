@@ -1,7 +1,7 @@
 import { createStore } from 'vuex'
 
 import axios from 'axios';
-const instance = axios.create({
+let Axios = axios.create({
     baseURL: 'http://localhost:3000/api/auth'
 })
 
@@ -14,7 +14,7 @@ user = {
 } else {
   try {
     user = JSON.parse(user);
-    instance.defaults.headers.common['Authorization'] = user.token;
+    Axios.defaults.headers.common['Authorization'] = `Baerer ${user.token}`;
   } catch (ex) {
     user = {
       userId: -1,
@@ -23,7 +23,7 @@ user = {
   }
 }
 
-// Create a new store instance.
+// Create a new store Axios
 const store = createStore({
   state: {
     status: '',
@@ -39,7 +39,7 @@ const store = createStore({
       state.status = status;
     },
     logUser (state, user) {
-      instance.defaults.headers.common['Authorization'] = user.token;
+      Axios.defaults.headers.common['Authorization'] = user.token;
       localStorage.setItem('user', JSON.stringify(user));
       state.user = user;
     },
@@ -52,7 +52,7 @@ const store = createStore({
     login: ({commit}, data) => {
       commit('setStatus', 'loading');
       return new Promise((resolve, reject) => {
-        instance.post('/login', data)
+        Axios.post('/login', data)
         .then(function (response) {
           commit('setStatus', 'login');
           commit('logUser', response.data);
@@ -71,7 +71,7 @@ const store = createStore({
       commit('setStatus', 'loading');
       return new Promise((resolve, reject) => {
         commit;
-        instance.post('/signup', data)
+        Axios.post('/signup', data)
         .then(function (response) {
           commit('setStatus', 'created');
           resolve(response);
@@ -86,6 +86,5 @@ const store = createStore({
     },
   }
 })
-
 
 export default store;

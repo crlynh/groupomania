@@ -9,7 +9,8 @@ export default {
         navbar,
         card,
         footerpage,
-    }
+    },
+
 }
 </script>
 
@@ -33,8 +34,6 @@ export default {
                 </button>
               </router-link>
                 </div>
-                <card></card>
-                <card></card>
                 <card></card>
             </div>
         </div>

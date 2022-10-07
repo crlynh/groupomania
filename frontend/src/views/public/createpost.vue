@@ -11,7 +11,9 @@ export default {
     data() {
 		return {
 			formData: {
-				userId: '633aefe073d6da83df13d3b3',
+				userId: '',
+				nom: '',
+				prenom:'',
         		title: '',
         		description: '',
 				file:'',
@@ -54,17 +56,16 @@ export default {
 				title: this.formData.title, 
 				description: this.formData.description
 				})
-			.then((response) => {
-				console.log(response)
+			.then((res) => {
 				alert("Votre publication a été ajoutée !");
 				this.$router.push("/home")
 			})
-			.catch((error) => {
-				console.log(error) 
+			.catch((err) => {
 				alert("Echec de la publication");
 			})
 			e.preventDefault();
-		}
+		},
+
 	}
 }
 

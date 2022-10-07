@@ -19,32 +19,31 @@ exports.getOnePost = (req, res, next) => {
 
 // Création d'un post
 exports.createPost = (req, res, next) => {
-  const postObject = JSON.parse(req.body.post);
-  delete postObject._id;
-  delete postObject._userId;
-  const title = req.body.title;
-  const description = req.body.description;
-  const post = new Post({
-      ...postObject,
-      userId: req.auth.userId,
-      title: req.body.title,
-      description: req.body.description,
-      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-      // likes: 0,
-      // usersLiked: [""], 
-  });
+  console.log("coucou")
+  // const postObject = JSON.parse(req.body.post);
+  // delete postObject._id;
+  // delete postObject._userId;
+  // const post = new Post({
+  //     userId: req.body.userId,
+  //     title: req.body.title,
+  //     description: req.body.description,
+      // imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+  // });
 
+  // post.save()
+  // .then(() => res.status(201).json({message: 'Post enregistré !'}))
+  // .catch(error => res.status(400).json( { error }))
+// }  
+
+  const { userId, nom, prenom, title, description } = req.body
+  // Validation des données reçues
   if (title == "") {
     return res.status(400).json({message: 'Champ manquant'});
   }
-  if (title.length <= titleMinLength || title.length >= titleMaxlength) {
-    return res.status(400).json({message: 'Champ invalide'});
-  }
-
-  post.save()
-  .then(() => res.status(201).json({message: 'Post enregistré !'}))
-  .catch(error => res.status(400).json( { error }))
-};
+    // Céation du post
+    post = Post.create(req.body)
+    return res.json({ message: 'Post crée', data: post })
+}
 
 // Modification d'un post
 exports.modifyPost = (req, res, next) => {

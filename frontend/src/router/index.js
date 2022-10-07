@@ -9,9 +9,14 @@ import * as Admin from '../views/admin'
 import { authGuard } from '../_helpers/auth-guard.js'
 
 const routes = [
+
+    { path: '/login', component: Auth.login },
+    { path: '/signup', component: Auth.signup },
+    { path: '/:pathMatch(.*)*', redirect:'/login'},
+
     { 
         path: '/', 
-        name: 'login',
+        name: 'public',
         redirect: '/login',
         component: Public.publicLayout,
         children: [
@@ -27,13 +32,9 @@ const routes = [
         children: [ 
             { path: '/admin/home', component: Admin.home },
             { path: '/admin/post/edit', component: Admin.editpost },
-            { path: '/admin/users/edit/:id', component: Admin.editusers, props: true }
+            { path: '/admin/users/edit', component: Admin.editusers, props: true }
         ],
     },
-
-        { path: '/login', component: Auth.login },
-        { path: '/signup', component: Auth.signup },
-        { path: '/:pathMatch(.*)*', redirect:'/login'},
 ]
 
 const router = createRouter({
@@ -45,7 +46,7 @@ router.beforeEach((to, from, next) => {
     if(to.matched[0].name == 'admin') {
         authGuard()
     }
-    if(to.matched[0].name == 'login') {
+    if(to.matched[0].name == 'public') {
         authGuard()
     }
     next()

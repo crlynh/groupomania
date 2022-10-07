@@ -8,6 +8,7 @@ import { faThumbsUp as faThumbsUpSolid } from "@fortawesome/free-solid-svg-icons
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 import App from './App.vue'
 import router from './router'
@@ -20,6 +21,7 @@ library.add(faThumbsUpSolid)
 library.add(faEllipsisVertical)
 library.add(faArrowLeft)
 library.add(faPlus)
+library.add(faTrashCan)
 
 createApp(App)
 .use(router)

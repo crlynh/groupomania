@@ -3,7 +3,7 @@ import { mapState } from 'vuex'
 
 export default {
     name: 'login',
-    data: function() {
+    data() {
       return {
         mode:'login',
         email: '',
@@ -39,19 +39,18 @@ export default {
         this.passwordError = true;
         }  
       },   
-      
+
+
       handleSubmit() {
-        const self = this;
         this.$store.dispatch('login', {
           email: this.email,
           password: this.password,
           }).then ((response) => {
-          console.log(response.data);
-          self.$router.push('/home');
+          this.$router.push('/home');
         }, function(error) {
           console.log(error)
         })
-        },
+      },
     }
 } 
 
@@ -133,8 +132,6 @@ export default {
 
 
 <style>
-
-
 .gradient-custom-2 {
 background: linear-gradient(to right, #ee7724, #FD2D01, #dd3675, #b44593);
 --bs-btn-border-color: none;
