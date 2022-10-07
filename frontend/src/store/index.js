@@ -35,11 +35,11 @@ const store = createStore({
     },
   },
   mutations: {
-    setStatus: function (state, status) {
+    setStatus (state, status) {
       state.status = status;
     },
     logUser (state, user) {
-      Axios.defaults.headers.common['Authorization'] = user.token;
+      Axios.defaults.headers.common['Authorization'] = `Baerer ${user.token}`;
       localStorage.setItem('user', JSON.stringify(user));
       state.user = user;
     },
@@ -47,19 +47,20 @@ const store = createStore({
       state.data = data;
     },
   },
+
   actions: {
     // Connexion 
     login: ({commit}, data) => {
       commit('setStatus', 'loading');
       return new Promise((resolve, reject) => {
         Axios.post('/login', data)
-        .then(function (response) {
+        .then((response) => {
           commit('setStatus', 'login');
           commit('logUser', response.data);
           resolve(response);
           alert("Utilisateur connecté");
         })
-        .catch(function (error) {
+        .catch((error) => {
           commit('setStatus', 'error_login');
           reject(error);
           alert("Email et/ou mot de passe incorect");
@@ -72,12 +73,12 @@ const store = createStore({
       return new Promise((resolve, reject) => {
         commit;
         Axios.post('/signup', data)
-        .then(function (response) {
+        .then((response) => {
           commit('setStatus', 'created');
           resolve(response);
           alert("Votre compte a bien été crée, vous pouvez désormais vous connecter");
         })
-        .catch(function (error) {
+        .catch((error) => {
           commit('setStatus', 'error_create');
           reject(error);
           alert("Echec de la création de compte");

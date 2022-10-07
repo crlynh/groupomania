@@ -41,7 +41,8 @@ export default {
       },   
 
 
-      handleSubmit() {
+      handleSubmit(event) {
+        event.preventDefault()
         this.$store.dispatch('login', {
           email: this.email,
           password: this.password,
@@ -72,14 +73,13 @@ export default {
               <h2 class="fw-bold">Bienvenue sur</h2>
               <img class= "mb-5" src="../../assets/logo/icon-left-font-monochrome-black.png" style="width: 200px;" alt="Logo_Groupomania">
             </div>
-            <form @submit="handleSubmit">
+            <form @submit.prevent="handleSubmit">
             <h4 class="text-secondary mb-4">CONNEXION</h4>
               <!-- Email input -->
               <div class="form-outline mb-4">
                 <input 
                   v-model="email"
                   type="email" 
-                  id="form3Example3" 
                   class="form-control" 
                   placeholder="Adresse mail"
                   @focusout="isEmailValid"/>
@@ -91,7 +91,6 @@ export default {
                 <input 
                   v-model="password"
                   type="password" 
-                  id="form3Example4" 
                   class="form-control" 
                   placeholder="Mot de passe"
                   @focusout="isPasswordValid"/>
@@ -105,7 +104,7 @@ export default {
                     class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-5" 
                     :class="{'button-disabled' : !validatedFields}"
                     type="button"
-                    @click="handleSubmit()">
+                    @click="handleSubmit">
                         <span v-if="status == 'loading'"> Connexion en cours...</span>
                         <span v-else>Se connecter</span>
                     </button>

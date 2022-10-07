@@ -1,7 +1,7 @@
 <script>
 import navbar from '../../components/navbar.vue'
 import { mapState } from 'vuex';
-import axios from 'axios';
+import Axios from 'axios';
 
 export default {
     name: 'createPost',
@@ -46,15 +46,20 @@ export default {
         	}
       	},
 
-		// uploadFiles(files) {
-		// 	this.file = files[0];
-		// },
+		uploadFiles(files) {
+			this.file = files[0];
+		},
 
 		createPost(e) {
 			const token = this.$store.state.user.token;
-			axios.post("http://localhost:3000/api/post/create", {
+			Axios.post("http://localhost:3000/api/post/create", {
 				title: this.formData.title, 
 				description: this.formData.description
+				}, {
+					headers: {
+						['Authorization']: `Basic ${token}`,
+						"Content-Type": "multipart/form-data"
+					},
 				})
 			.then((res) => {
 				alert("Votre publication a été ajoutée !");
@@ -126,6 +131,7 @@ export default {
 						accept="image/*, video/*"
 						class="input-file"
 						id="file"
+						@change="uploadFiles($event.target.files)"
 					/>
     		    </div>
     		    <div class="form-group  d-flex justify-content-end">
