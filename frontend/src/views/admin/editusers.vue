@@ -1,28 +1,31 @@
 <script>
-import adminNavbar from '../../components/adminNavbar.vue'
+import navbar from '../../components/navbar.vue'
 import footerpage from '../../components/footer.vue'
 
-import axios from 'axios';
+import { mapState } from "vuex";
+import Axios from 'axios';
 
 export default {
     name: 'edituser',
     data() {
       return {
-        users : []
+        users : [],
+        accountUsers : [],
       }    
   },
     components: {
-        adminNavbar,
+        navbar,
         footerpage
     },
     computed : {
       numberOfUsers() {
         return (this.users.length == 0) ? 'Aucun utilisateur' : `Nombre d'utilisateurs: ${this.users.length}`
-      }
+      },
+      ...mapState(["status", "user"]),
     },
     methods: {
       getAllUsers() {
-      axios.get('http://localhost:3000/api/user')
+      Axios.get('http://localhost:3000/api/user')
       .then(res => {
         this.users = res.data
         console.log(res.data)
@@ -30,15 +33,19 @@ export default {
       .catch(err => console.log(err))
       },
 
-      // deleteUsers(user) {
-      //   axios.delete('http://localhost:3000/api/user'+user._id)
-      //   .then(res => {
-      //   this.getAllUsers()
-      //   // this.users.splice(user,1)
-      //   })
-      //   .catch(err => console.log(err))
-      // }
-
+      deleteUsers(index) {
+      console.log(index)
+      let userId = this.users[index]._id
+      console.log(userId)
+      // if (
+        //   window.confirm(
+        //     "Êtes-vous sûr de vouloir supprimer ce compte ?"
+        //   )
+      // ) 
+      Axios.delete('http://localhost:3000/api/user/'+userId)
+      .then(res => this.users.splice(userId,1))
+      .catch(err => console.log(err))
+      }
     },
     mounted() {
       this.getAllUsers()
@@ -50,7 +57,7 @@ export default {
 <template>
 <main>
 
-<admin-navbar></admin-navbar>
+<navbar></navbar>
 
 <section class="usercard" > 
   <div class="container py-5">
@@ -63,7 +70,7 @@ export default {
 <!------------ Back to home page ------------>
     <h3>Liste des utilisateurs</h3>
     <h5  class=" pb-5">{{ numberOfUsers }}</h5>
-    <div class="row h-30" v-for="user in users" :key="user._id">
+    <div class="row h-30" v-for="(user, index) in users" :key="user._id">
       <div class="col mb-4 mb-lg-0">
         <div class="card mb-3" style="border-radius: .5rem;">
           <div class="row g-0">
@@ -75,7 +82,7 @@ export default {
               <div class="card-body col-md-8 p-3">
                 <div class="d-flex flex-row justify-content-between">
                   <h4>Informations</h4>
-                  <div class="del" @click="deleteUsers(user)">
+                  <div class="del" @click="deleteUsers(index)">
                     <font-awesome-icon icon="fa-solid fa-trash-can" /></div> 
                 </div>               
                 <hr class="mt-0 mb-8">

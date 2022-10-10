@@ -19,6 +19,7 @@ user = {
     user = {
       userId: -1,
       token: '',
+      Admin: false,
     };
   }
 }
@@ -32,6 +33,7 @@ const store = createStore({
       nom:'',
       prenom: '',
       email: '',
+      Admin: false,
     },
   },
   mutations: {

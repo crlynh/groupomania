@@ -25,12 +25,7 @@ export default {
 
         <div>
                 <div class="nav-item me-3 me-lg-0 d-flex justify-content-center align-items-center"  style="gap:10px">
-                    <div class="d-flex align-items-center">
-                        <router-link to="/admin/home">
-                        <a>Accéder au compte admin</a>
-                        </router-link>
-                    </div>
-                    <router-link to="/login">  |
+                    <router-link to="/login"> 
                         <button 
                         type="button" 
                         class="btn btn-outline-light btn-sm"

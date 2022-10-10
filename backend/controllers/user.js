@@ -11,7 +11,11 @@ exports.getAllUsers = (req, res, next) => {
 
 // Recupération d'un user
 exports.getOneUser = (req, res, next) => {
-    User.findOne({_id: req.params.id})
+    // User.findOne({_id: req.params.id})
+    User.findOne({
+        attributes: ['nom', 'prenom', 'id', 'email'],
+        where: { id: req.params.id }
+    })
     .then((user) => res.status(200).json(user))
     .catch((error) => res.status(404).json({error: error}));
     };
@@ -19,16 +23,12 @@ exports.getOneUser = (req, res, next) => {
 // Suppression d'un user
 exports.deleteUser = (req, res, next) => {
     User.findOne({ _id: req.params.id})
-        .then(user => {
-            if (user.userId != req.auth.userId) {
-                res.status(401).json({message: 'Non autorisé'});
-            } else {
-                User.deleteOne({_id: req.params.id})
-                .then(() => res.status(200).json({message: 'Utilisateur supprimé !'}))
-                .catch(error => res.status(401).json({ error }));
-            }
-        })
+    .then(user => {
+        User.deleteOne({ where: { _id: req.params.id}, force: true})
+        .then(() => res.status(200).json({message: 'Utilisateur supprimé !'}))
+        .catch(err => res.status(500).json({ message: 'Database Error', error: err }))
+    })
         .catch( error => {
             res.status(500).json({ error });
         });
-    };
+}

@@ -22,6 +22,7 @@ const routes = [
         children: [
             { path: '/home', component: Public.home },
             { path: '/createpost', component: Public.createpost },
+            { path: '/post/edit', component: Admin.editpost},
         ],
     },
 
@@ -31,7 +32,6 @@ const routes = [
         component: Admin.adminLayout, 
         children: [ 
             { path: '/admin/home', component: Admin.home },
-            { path: '/admin/post/edit', component: Admin.editpost },
             { path: '/admin/users/edit', component: Admin.editusers, props: true }
         ],
     },

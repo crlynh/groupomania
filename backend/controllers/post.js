@@ -6,6 +6,7 @@ const fs = require('fs');
 // Recupération de tous les posts
 exports.getAllPost = (req, res, next) => {
   Post.find()
+  .sort({ createAt: -1 })
   .then((post) => res.status(200).json(post))
   .catch((error) => res.status(400).json({error: error}));
 };
@@ -19,15 +20,16 @@ exports.getOnePost = (req, res, next) => {
 
 // Création d'un post
 exports.createPost = (req, res, next) => {
-  console.log("coucou")
   // const postObject = JSON.parse(req.body.post);
   // delete postObject._id;
   // delete postObject._userId;
   // const post = new Post({
   //     userId: req.body.userId,
+  //     nom: req.body.nom,
+  //     prenom:req.body.prenom,
   //     title: req.body.title,
   //     description: req.body.description,
-      // imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+  //     imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
   // });
 
   // post.save()
@@ -35,7 +37,7 @@ exports.createPost = (req, res, next) => {
   // .catch(error => res.status(400).json( { error }))
 // }  
 
-  const { userId, nom, prenom, title, description } = req.body
+  const { userId, nom, prenom, title, description, imageUrl } = req.body
   // Validation des données reçues
   if (title == "") {
     return res.status(400).json({message: 'Champ manquant'});
@@ -72,15 +74,17 @@ exports.modifyPost = (req, res, next) => {
 exports.deletePost = (req, res, next) => {
   Post.findOne({ _id: req.params.id})
       .then(post => {
+        console.log(req)
+        console.log(post)
           if (post.userId != req.auth.userId) {
               res.status(401).json({message: 'Non autorisé'});
           } else {
-              const filename = post.imageUrl.split('/images/')[1];
-              fs.unlink(`images/${filename}`, () => {
+              // const filename = post.imageUrl.split('/images/')[1];
+              // fs.unlink(`images/${filename}`, () => {
                   Post.deleteOne({_id: req.params.id})
                       .then(() => res.status(200).json({message: 'Post supprimé !'}))
                       .catch(error => res.status(401).json({ error }));
-              });
+              // });
           }
       })
       .catch( error => {

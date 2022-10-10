@@ -5,7 +5,6 @@ const userCtrl = require('../controllers/user')
 
 router.use( (req, res, next) => {
     const event = new Date()
-    console.log('User Time:', event.toString())
     next()
 })
 
