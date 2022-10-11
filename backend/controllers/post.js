@@ -42,7 +42,7 @@ exports.createPost = (req, res, next) => {
   if (title == "") {
     return res.status(400).json({message: 'Champ manquant'});
   }
-    // Céation du post
+    // Création du post
     post = Post.create(req.body)
     return res.json({ message: 'Post crée', data: post })
 }
@@ -74,8 +74,6 @@ exports.modifyPost = (req, res, next) => {
 exports.deletePost = (req, res, next) => {
   Post.findOne({ _id: req.params.id})
       .then(post => {
-        console.log(req)
-        console.log(post)
           if (post.userId != req.auth.userId) {
               res.status(401).json({message: 'Non autorisé'});
           } else {

@@ -2,7 +2,7 @@
 import Axios from 'axios';
 
 import likebutton from './likebutton.vue'
-import { mapState } from 'vuex';
+import moment from 'moment'
 
 export default {
     name:'card',
@@ -13,6 +13,7 @@ export default {
       return {
         posts : [],
         userCanUpdate : true,
+        date: new Date()
       };    
     },
 
@@ -58,6 +59,11 @@ export default {
     },
 
     methods: {
+    dateTime(createAt) {
+      moment.locale('fr');
+      return moment(createAt).startOf('second').fromNow(createAt);
+    },
+
       isUserCanUpdate(id){
         const userId = this.$store.state.user.userId
         if (userId == this.posts) {
@@ -110,7 +116,6 @@ export default {
       deletePost(index) {
       const token = this.$store.state.user.token;
       let postId = this.posts[index]._id
-      console.log(postId)
       if (
           window.confirm(
             "Êtes-vous sûr de vouloir supprimer cette publication ?"
@@ -122,7 +127,7 @@ export default {
 					},        
       })
       .then(res => this.posts.splice(index, 1))
-      .catch(err => console.log(err))
+      .catch(err => alert("Vous n'avez pas les droits pour supprimer cette publication"))
       },
 
       modifyPost() {
@@ -150,7 +155,7 @@ export default {
     <div class="d-flex flex-row align-items-center feed-text px-2"><img class="rounded-circle shadow-2" style="width: 45px;" alt="Avatar" src="../assets/images/png-clipart-computer-icons-user-profile-avatar-avatar-heroes-monochrome.png">
         <div class="d-flex flex-column flex-wrap ml-2">
             <span class="font-weight-bold">NOM PRENOM</span>
-            <span class="text-black-50 time">{{post.createAt}}</span>
+            <span class="text-black-50 time">Il y a {{ dateTime(post.createAt) }}</span>
         </div>
     </div>
     <div class = "dropdown p-2" @focusout="isUserCanUpdate()" v-if="userCanUpdate">

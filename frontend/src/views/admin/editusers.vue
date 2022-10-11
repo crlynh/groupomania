@@ -34,7 +34,6 @@ export default {
       },
 
       deleteUsers(index) {
-      console.log(index)
       let userId = this.users[index]._id
       console.log(userId)
       // if (
@@ -43,7 +42,7 @@ export default {
         //   )
       // ) 
       Axios.delete('http://localhost:3000/api/user/'+userId)
-      .then(res => this.users.splice(userId,1))
+      .then(res => this.users.splice(index,1))
       .catch(err => console.log(err))
       }
     },
