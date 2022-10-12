@@ -26,7 +26,7 @@ export default {
     </div>
                         <div class="d-flex align-items-center">
                         <router-link to="/admin/home">
-                        <a>Accéder administrateur</a>
+                        <a>Accès administrateur</a>
                         </router-link>
                     </div>
     <!-- Right -->

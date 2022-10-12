@@ -12,7 +12,7 @@ const routes = [
 
     { path: '/login', component: Auth.login },
     { path: '/signup', component: Auth.signup },
-    { path: '/:pathMatch(.*)*', redirect:'/login'},
+    // { path: '/:pathMatch(.*)*', redirect:'/login'},
 
     { 
         path: '/', 
@@ -21,8 +21,8 @@ const routes = [
         component: Public.publicLayout,
         children: [
             { path: '/home', component: Public.home },
-            { path: '/createpost', component: Public.createpost },
-            { path: '/post/edit', component: Admin.editpost},
+            { path: '/createpost/', component: Public.createpost, prop: true },
+            { path: '/editpost/:id(\\d+)', name : 'editPost', component: Public.editpost},
         ],
     },
 
@@ -42,14 +42,14 @@ const router = createRouter({
     routes,
 })
 
-router.beforeEach((to, from, next) => {
-    if(to.matched[0].name == 'admin') {
-        authGuard()
-    }
-    if(to.matched[0].name == 'public') {
-        authGuard()
-    }
-    next()
-})
+// router.beforeEach((to, from, next) => {
+//     if(to.matched[0].name == 'admin') {
+//         authGuard()
+//     }
+//     if(to.matched[0].name == 'public') {
+//         authGuard()
+//     }
+//     next()
+// })
 
 export default router;

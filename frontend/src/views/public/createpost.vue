@@ -49,19 +49,10 @@ export default {
 		uploadFiles(files) {
 			this.file = files[0];
 		},
-		
-		getData() {
-      		let data = new FormData();
-      		data.append("title", this.title);
-      		data.append("description", this.description);
-      		data.append("file", this.file);
-      		return data;
-    },
 
 		createPost(e) {
 			const token = this.$store.state.user.token;
 			const userId = this.$store.state.user.userId;
-			// const data = this.getData();
 			console.log(userId)
 			Axios.post("http://localhost:3000/api/post/create", {
 				userId: userId,

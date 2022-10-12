@@ -8,6 +8,8 @@ let Axios = axios.create({
 let user = localStorage.getItem('user');
 if (!user) {
 user = {
+    nom:'',
+    prenom: '',
     userId: -1,
     token: '',
   }; 
@@ -17,6 +19,8 @@ user = {
     Axios.defaults.headers.common['Authorization'] = `Baerer ${user.token}`;
   } catch (ex) {
     user = {
+      nom:'',
+      prenom: '',
       userId: -1,
       token: '',
       Admin: false,
@@ -30,8 +34,6 @@ const store = createStore({
     status: '',
     user: user,
     data: {
-      nom:'',
-      prenom: '',
       email: '',
       Admin: false,
     },

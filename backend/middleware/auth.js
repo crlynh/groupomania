@@ -19,7 +19,7 @@ try {
         } 
     } catch(error) {
         res.status(401).json({
-        error: new Error("Invalid request!")
+        error: new Error({message: 'Non autorisé'})
         });
     }
 };

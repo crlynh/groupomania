@@ -2,7 +2,8 @@
 import Axios from 'axios';
 
 import likebutton from './likebutton.vue'
-import moment from 'moment'
+import moment from 'moment/min/moment-with-locales'
+import 'moment/locale/fr'
 
 export default {
     name:'card',
@@ -12,8 +13,7 @@ export default {
     data() {
       return {
         posts : [],
-        userCanUpdate : true,
-        date: new Date()
+        userCanUpdate : false,
       };    
     },
 
@@ -59,57 +59,57 @@ export default {
     },
 
     methods: {
-    dateTime(createAt) {
+      dateTime(createAt) {
       moment.locale('fr');
-      return moment(createAt).startOf('second').fromNow(createAt);
-    },
+        return moment(createAt).startOf('second').fromNow(createAt);
+      },
 
       isUserCanUpdate(id){
         const userId = this.$store.state.user.userId
         if (userId == this.posts) {
-            this.userCanUpdate = false
-          } else {
             this.userCanUpdate = true
+          } else {
+            this.userCanUpdate = false
           }          
       },
 
       getAllPosts() {
-        Axios.get('http://localhost:3000/api/post/home')
+        const token = this.$store.state.user.token
+        Axios.get('http://localhost:3000/api/post/home', {
+					headers: {
+						['Authorization']: `Basic ${token}`,
+					},            
+        })
           .then(res => 
           {this.posts = res.data
-            this.posts.forEach((post,i)=> {
-              this.posts[i].user = this.getOneUser(post.userId)
-            });
+            // this.posts.forEach((post,i)=> {
+            //   this.posts[i].user = this.getOneUserName(this.posts)
+            //   console.log(res.data)
+            // });
           })
           .catch(err => console.log(err))
-      },
+      }, 
 
-      // async getOneUser(userId) {
-      //   const token = this.$store.state.user.token;
-      //   let result = await Axios.get('http://localhost:3000/api/user/' + userId, {
-			// 		headers: {
-			// 			['Authorization']: `Basic ${token}`,
-			// 		},        
-      //   })
-      //   .then(res => res.data)
-      //   .catch(err => console.log(err))
-        
-      //   return { 
-      //       nom : result.nom,
-      //       prenom : result.prenom 
-      //     }
-      // },   
-
-      getOneUser() {
+      getOneUserName() {
         const token = this.$store.state.user.token
         const userId = this.$store.state.user.userId
+        let userPostNom = "";
+        let userPostPrenom = "";
         Axios.get('http://localhost:3000/api/user/' + userId, {
 					headers: {
 						['Authorization']: `Basic ${token}`,
 					},        
         })
-        .then(res => res.data)
-        .catch(err => console.log(err))        
+        .then(res => {
+          userPostNom = res.data.nom
+          userPostPrenom = res.data.prenom
+        })
+        .catch(err => console.log(err))
+      
+        return {
+          nom : userPostNom,
+          prenom : userPostPrenom
+        }
       },
 
 
@@ -130,14 +130,32 @@ export default {
       .catch(err => alert("Vous n'avez pas les droits pour supprimer cette publication"))
       },
 
-      modifyPost() {
-        console.log("route vers /editpost")
+      editPost(postId) {
+        const token = this.$store.state.user.token;
+        const userId = this.$store.state.user.userId
+        console.log(userId)
+        Axios.get('http://localhost:3000/api/post/'+postId, {
+          headers: {
+            ['Authorization']: `Basic ${token}`,
+          },   
+        })
+        .then(res => {
+        this.posts.userId = res.data.userId
+        console.log(this.posts.userId)
+        })
+        .catch(err => console.log(err))
+
+        if ( this.posts.userId  == userId ) { 
+          return alert("Vous n'avez pas les droits pour modifier cette publication")     
+        } else {
+          return this.$router.push({name:'editPost', params: {id: postId}})
+        }
       }
 
     },
     mounted() {
       this.getAllPosts()
-      // this.getOneUser()
+      this.getOneUserName()
     },
 }
 
@@ -148,23 +166,22 @@ export default {
 <main>
 <!------------------- Publication Card ------------------->
 <section 
-  v-for="(post, index) in posts" 
-  :key="post._id"
+  v-for="(post, index) in posts" :key="post._id"
   class="bg-white border mt-2">    
   <div class="d-flex flex-row justify-content-between align-items-center p-2">
     <div class="d-flex flex-row align-items-center feed-text px-2"><img class="rounded-circle shadow-2" style="width: 45px;" alt="Avatar" src="../assets/images/png-clipart-computer-icons-user-profile-avatar-avatar-heroes-monochrome.png">
         <div class="d-flex flex-column flex-wrap ml-2">
-            <span class="font-weight-bold">NOM PRENOM</span>
-            <span class="text-black-50 time">Il y a {{ dateTime(post.createAt) }}</span>
+            <span class="font-weight-bold">{{post.userId}}</span>
+            <span class="text-black-50 time">Posté il y a {{ dateTime(post.createAt) }}</span>
         </div>
     </div>
-    <div class = "dropdown p-2" @focusout="isUserCanUpdate()" v-if="userCanUpdate">
+    <div class = "dropdown p-2" @focusout="isUserCanUpdate()" v-if="userCanUpdate == false">
         <div data-bs-toggle="dropdown">
         <font-awesome-icon icon="fa-solid fa-ellipsis-vertical" />
         </div>
         <ul class="dropdown-menu" >
-            <li><a class="dropdown-item" 
-            @click="modifyPost()">Modifier</a></li>
+            <li><a class="dropdown-item edit" 
+            @click="editPost(post._id)">Modifier</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item"
             @click="deletePost(index)"> Supprimer </a></li>
@@ -198,8 +215,6 @@ export default {
   cursor: pointer;
   display: none;
 }
-
-
 
 .feed-image img {
   width: 100%;

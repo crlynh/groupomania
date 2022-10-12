@@ -43,18 +43,18 @@ exports.createPost = (req, res, next) => {
     return res.status(400).json({message: 'Champ manquant'});
   }
     // Création du post
-    post = Post.create(req.body)
-    return res.json({ message: 'Post crée', data: post })
+    let post = Post.create(req.body)
+    return res.json({ message: 'Post crée !', data: post })
 }
 
 // Modification d'un post
-exports.modifyPost = (req, res, next) => {
-  const postObject = req.file ? {
-      ...JSON.parse(req.body.post),
-      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-  } : { ...req.body };
+exports.editPost = (req, res, next) => {
+  // const postObject = req.file ? {
+  //     ...JSON.parse(req.body.post),
+  //     imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+  // } : { ...req.body };
 
-  delete postObject._userId;
+  // delete postObject._userId;
   Post.findOne({_id: req.params.id})
       .then((post) => {
           if (post.userId != req.auth.userId) {
@@ -62,7 +62,7 @@ exports.modifyPost = (req, res, next) => {
           } else {
               Post.updateOne({ _id: req.params.id}, { ...postObject, _id: req.params.id})
               .then(() => res.status(200).json({message : 'Post modifié !'}))
-              .catch(error => res.status(401).json({ error }));
+              .catch(error => res.status(401).json({ message : 'Impossible de modifier le post' }));
           }
       })
       .catch((error) => {
@@ -81,7 +81,7 @@ exports.deletePost = (req, res, next) => {
               // fs.unlink(`images/${filename}`, () => {
                   Post.deleteOne({_id: req.params.id})
                       .then(() => res.status(200).json({message: 'Post supprimé !'}))
-                      .catch(error => res.status(401).json({ error }));
+                      .catch(error => res.status(401).json({ message : 'Impossible de supprimer le post' }));
               // });
           }
       })
