@@ -2,6 +2,7 @@
 import login from './views/auth/login.vue'
 import signup from './views/auth/signup.vue'
 import home from './views/public/home.vue'
+import profilecard from './components/profilecard.vue'
 import card from './components/card.vue'
 import createpost from './views/public/createpost.vue'
 import navbar from './components/navbar.vue'
@@ -16,8 +17,34 @@ export default {
     navbar,
     footerpage,
     home,
+    profilecard,
     card,
     createpost,
+  },
+  methods: {
+    logoutExpiredToken() {
+      Axios.interceptors.response.use(response => {
+    return response
+}, error => {
+    console.log(error)
+    
+
+    if(!error.response){
+        // Erreur rzo
+        store.commit('displayNotif', {d: true, mes: error})
+        return Promise.reject(error)
+    }else{
+        if(error.response.status == 401){
+            localStorage.removeItem('user')
+            router.push('/login')
+        }else{
+            // Erreur de l'API
+            store.commit('displayNotif', {d: true, mes: error.response.data.message})
+            return Promise.reject(error)
+        }
+    }
+})
+    }
   }
 } 
 </script>

@@ -8,7 +8,7 @@ export default {
 
 <template>
 <!-- Footer -->
-<footer class="text-center text-lg-start text-muted">
+<footer class="text-center text-lg-start text-muted bg-gradient">
   <!-- Section: Social media -->
   <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
 
@@ -37,8 +37,9 @@ export default {
 </template>
 
 <style>
+
 footer {
-    background-color: #4E5166;
+  background-color: #555860;
 }
 
 p {

@@ -38,13 +38,19 @@ export default {
         editPost() {
 			const token = this.$store.state.user.token
             let postId = this.formData._id
+			console.log(this.formData)
 			Axios.put('http://localhost:3000/api/post/'+postId, {
+				title : this.formData.title,
+				description : this.formData.description,
+			}, {
 				headers: {
-					['Authorization']: `Basic ${token}`,
+					'Authorization': `Basic ${token}`,
 				},   				
 			})
-			.then(res => console.log(res))
-			.catch(err => console.log(err))
+			.then((res) => {
+				this.$router.push("/home")
+			})
+			.catch(err => console.log(err.message))
         },
 	},
 

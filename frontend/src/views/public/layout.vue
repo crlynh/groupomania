@@ -7,7 +7,6 @@ export default {
 
 <template>
     <main> 
-        Public Layout
     <router-view></router-view>
     </main>
 </template>

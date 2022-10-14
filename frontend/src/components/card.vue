@@ -80,8 +80,9 @@ export default {
 						['Authorization']: `Basic ${token}`,
 					},            
         })
-          .then(res => 
-          {this.posts = res.data
+          .then(res => {
+            this.posts = res.data,
+            console.log(res)
             // this.posts.forEach((post,i)=> {
             //   this.posts[i].user = this.getOneUserName(this.posts)
             //   console.log(res.data)
@@ -91,31 +92,31 @@ export default {
       }, 
 
       getOneUserName() {
-        const token = this.$store.state.user.token
-        const userId = this.$store.state.user.userId
-        let userPostNom = "";
-        let userPostPrenom = "";
-        Axios.get('http://localhost:3000/api/user/' + userId, {
-					headers: {
-						['Authorization']: `Basic ${token}`,
-					},        
-        })
-        .then(res => {
-          userPostNom = res.data.nom
-          userPostPrenom = res.data.prenom
-        })
-        .catch(err => console.log(err))
+        // const token = this.$store.state.user.token
+        // const userId = this.$store.state.user.userId
+        // let userPostNom = "";
+        // let userPostPrenom = "";
+        // Axios.get('http://localhost:3000/api/user/' + userId, {
+				// 	headers: {
+				// 		['Authorization']: `Basic ${token}`,
+				// 	},        
+        // })
+        // .then(res => {
+        //   userPostNom = res.data.nom
+        //   userPostPrenom = res.data.prenom
+        // })
+        // .catch(err => console.log(err))
       
-        return {
-          nom : userPostNom,
-          prenom : userPostPrenom
-        }
+        // return {
+        //   nom : userPostNom,
+        //   prenom : userPostPrenom
+        // }
       },
 
 
       deletePost(index) {
       const token = this.$store.state.user.token;
-      let postId = this.posts[index]._id
+      let postId = this.posts[index].post._id
       if (
           window.confirm(
             "Êtes-vous sûr de vouloir supprimer cette publication ?"
@@ -133,7 +134,6 @@ export default {
       editPost(postId) {
         const token = this.$store.state.user.token;
         const userId = this.$store.state.user.userId
-        console.log(userId)
         Axios.get('http://localhost:3000/api/post/'+postId, {
           headers: {
             ['Authorization']: `Basic ${token}`,
@@ -167,12 +167,12 @@ export default {
 <!------------------- Publication Card ------------------->
 <section 
   v-for="(post, index) in posts" :key="post._id"
-  class="bg-white border mt-2">    
+  class="bg-white border mt-2">   
   <div class="d-flex flex-row justify-content-between align-items-center p-2">
     <div class="d-flex flex-row align-items-center feed-text px-2"><img class="rounded-circle shadow-2" style="width: 45px;" alt="Avatar" src="../assets/images/png-clipart-computer-icons-user-profile-avatar-avatar-heroes-monochrome.png">
         <div class="d-flex flex-column flex-wrap ml-2">
-            <span class="font-weight-bold">{{post.userId}}</span>
-            <span class="text-black-50 time">Posté il y a {{ dateTime(post.createAt) }}</span>
+            <span class="font-weight-bold">{{post.user.prenom}} {{post.user.nom}}</span>
+            <span class="text-black-50 time">Posté il y a {{ dateTime(post.post.createAt) }}</span>
         </div>
     </div>
     <div class = "dropdown p-2" @focusout="isUserCanUpdate()" v-if="userCanUpdate == false">
@@ -181,7 +181,7 @@ export default {
         </div>
         <ul class="dropdown-menu" >
             <li><a class="dropdown-item edit" 
-            @click="editPost(post._id)">Modifier</a></li>
+            @click="editPost(post.post._id)">Modifier</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item"
             @click="deletePost(index)"> Supprimer </a></li>
@@ -189,8 +189,8 @@ export default {
     </div>
   </div>
   <div>
-    <div class="p-2 px-3 pt-3"><h5>{{post.title}}</h5></div>
-    <div class="p-2 px-3"><span>{{post.description}}</span></div>
+    <div class="p-2 px-3 pt-3"><h5>{{post.post.title}}</h5></div>
+    <div class="p-2 px-3"><span>{{post.post.description}}</span></div>
     <div class="feed-image p-2 px-3" v-if="fileExtension == 'image'">
       <img class="mediaContainer"
       :src="post.file"

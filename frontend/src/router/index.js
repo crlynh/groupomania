@@ -10,9 +10,9 @@ import { authGuard } from '../_helpers/auth-guard.js'
 
 const routes = [
 
-    { path: '/login', component: Auth.login },
+    { path: '/login', name: 'login', component: Auth.login },
     { path: '/signup', component: Auth.signup },
-    // { path: '/:pathMatch(.*)*', redirect:'/login'},
+    { path: '/:pathMatch(.*)*', redirect:'/login'},
 
     { 
         path: '/', 
@@ -42,14 +42,21 @@ const router = createRouter({
     routes,
 })
 
-// router.beforeEach((to, from, next) => {
-//     if(to.matched[0].name == 'admin') {
-//         authGuard()
-//     }
-//     if(to.matched[0].name == 'public') {
-//         authGuard()
-//     }
-//     next()
-// })
+router.beforeEach((to, from, next) => {
+    if(to.matched[0].name == 'admin') {
+        authGuard()
+    }
+    if(to.matched[0].name == 'public') {
+        authGuard()
+    }
+    if(to.matched[0].name == 'login') {
+        let token = localStorage.getItem('user')
+        if(token) {
+            router.push('/home')
+            return true
+        }
+    }
+    next()
+})
 
 export default router;

@@ -4,16 +4,20 @@ export default {
     name: 'navbar',
     methods: {
         logout() {
-            localStorage.removeItem('user')
-        }
+            if (confirm("Êtes-vous sûr de vouloir vous déconnecter ?")) {
+                localStorage.removeItem('user');
+                window.location.href  = "/login"
+            } else {
+                return false
+            }
     }
 }
-
+}
 </script>
 
 <template>
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark">
+<nav class="navbar navbar-expand-lg bg-gradient">
     <!-- Container wrapper -->
     <div class="container-fluid d-flex justify-content-between flex-row">
         <div>
@@ -25,14 +29,14 @@ export default {
 
         <div>
                 <div class="nav-item me-3 me-lg-0 d-flex justify-content-center align-items-center"  style="gap:10px">
-                    <router-link to="/login"> 
+                    
                         <button 
                         type="button" 
                         class="btn btn-outline-light btn-sm"
                         @click="logout()">
                         Se deconnecter
                         </button>
-                    </router-link>
+                    
                 </div>
         </div>
     </div>
@@ -42,8 +46,8 @@ export default {
 
 <style>
 
-.navbar {
-    background-color: #4E5166;
+nav {
+    background-color: #555860;
 }
 
 a {

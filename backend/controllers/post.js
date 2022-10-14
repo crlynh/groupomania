@@ -2,13 +2,21 @@ const Post = require('../models/post');
 const User = require("../models/user");
 const fs = require('fs');
 
+const mongoose = require('mongoose');
+
 
 // Recupération de tous les posts
-exports.getAllPost = (req, res, next) => {
-  Post.find()
-  .sort({ createAt: -1 })
-  .then((post) => res.status(200).json(post))
-  .catch((error) => res.status(400).json({error: error}));
+exports.getAllPost = async (req, res, next) => {
+  result = []
+
+  let posts = await Post.find().sort({ createAt: -1 })
+
+  for (let i = 0; i < posts.length; i++) {
+    let user = await User.findOne({ _id: posts[i].userId })
+    result.push({post: posts[i], user: user})
+  }
+  console.log(result)
+  res.status(200).json(result)
 };
 
 // Recupération d'un post
@@ -57,10 +65,11 @@ exports.editPost = (req, res, next) => {
   // delete postObject._userId;
   Post.findOne({_id: req.params.id})
       .then((post) => {
-          if (post.userId != req.auth.userId) {
+          if (JSON.stringify(post.userId) !== JSON.stringify(mongoose.Types.ObjectId(req.auth.userId))) {
               res.status(401).json({ message : 'Non autorisé'});
           } else {
-              Post.updateOne({ _id: req.params.id}, { ...postObject, _id: req.params.id})
+            console.log(req.body)
+              Post.updateOne({ _id: req.params.id}, { title: req.body.title, description: req.body.description })
               .then(() => res.status(200).json({message : 'Post modifié !'}))
               .catch(error => res.status(401).json({ message : 'Impossible de modifier le post' }));
           }
