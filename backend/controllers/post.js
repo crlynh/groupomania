@@ -15,7 +15,6 @@ exports.getAllPost = async (req, res, next) => {
     let user = await User.findOne({ _id: posts[i].userId })
     result.push({post: posts[i], user: user})
   }
-  console.log(result)
   res.status(200).json(result)
 };
 
@@ -26,34 +25,29 @@ exports.getOnePost = (req, res, next) => {
   .catch((error) => res.status(404).json({error: error}));
 };
 
-// Création d'un post
-exports.createPost = (req, res, next) => {
-  // const postObject = JSON.parse(req.body.post);
-  // delete postObject._id;
-  // delete postObject._userId;
-  // const post = new Post({
-  //     userId: req.body.userId,
-  //     nom: req.body.nom,
-  //     prenom:req.body.prenom,
-  //     title: req.body.title,
-  //     description: req.body.description,
-  //     imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-  // });
-
-  // post.save()
-  // .then(() => res.status(201).json({message: 'Post enregistré !'}))
-  // .catch(error => res.status(400).json( { error }))
-// }  
-
-  const { userId, nom, prenom, title, description, imageUrl } = req.body
-  // Validation des données reçues
-  if (title == "") {
-    return res.status(400).json({message: 'Champ manquant'});
+exports.createPost = async (req, res, next) => {
+  try {
+      const userId = req.body.userId;
+      const post = req.file ?
+          {
+              ...req.body,
+              userId: userId,
+              imageUrl: req.file.filename,
+              likes: 0,
+              usersLiked: [],
+          } : {
+              ...req.body,
+              userId: userId,
+              likes: 0,
+              usersLiked: [],
+          };
+          console.log(req.file)
+      await Post.create(post);
+      res.json({ msg: "Publication réussie" });
+  } catch (error) {
+      res.json({ msg: error.msg });
   }
-    // Création du post
-    let post = Post.create(req.body)
-    return res.json({ message: 'Post crée !', data: post })
-}
+};
 
 // Modification d'un post
 exports.editPost = (req, res, next) => {
@@ -68,7 +62,6 @@ exports.editPost = (req, res, next) => {
           if (JSON.stringify(post.userId) !== JSON.stringify(mongoose.Types.ObjectId(req.auth.userId))) {
               res.status(401).json({ message : 'Non autorisé'});
           } else {
-            console.log(req.body)
               Post.updateOne({ _id: req.params.id}, { title: req.body.title, description: req.body.description })
               .then(() => res.status(200).json({message : 'Post modifié !'}))
               .catch(error => res.status(401).json({ message : 'Impossible de modifier le post' }));
@@ -86,7 +79,7 @@ exports.deletePost = (req, res, next) => {
           if (post.userId != req.auth.userId) {
               res.status(401).json({message: 'Non autorisé'});
           } else {
-              // const filename = post.imageUrl.split('/images/')[1];
+              // const filename = post.file.split('/images/')[1];
               // fs.unlink(`images/${filename}`, () => {
                   Post.deleteOne({_id: req.params.id})
                       .then(() => res.status(200).json({message: 'Post supprimé !'}))

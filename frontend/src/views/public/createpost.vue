@@ -21,6 +21,8 @@ export default {
 				titleMinLength: 2,
 				titleMaxLength: 50,
 				},
+			previewImage: null,
+
 		};
 	},
 
@@ -45,20 +47,33 @@ export default {
           		this.formData.titleError = true;
         	}
       	},
-
-		uploadFiles(files) {
-			this.file = files[0];
+		selectImage() {
+			this.$refs.fileInput.click()
+		},
+		pickFile() {
+			let input = this.$refs.fileInput
+			let imageUrl = input.files
+			if (imageUrl && imageUrl[0]) {
+				let reader = new FileReader
+				reader.onload = e => {
+					this.previewImage = e.target.result
+				}
+				reader.readAsDataURL(imageUrl[0])
+				this.$emit('input', imageUrl[0])
+			}
 		},
 
 		createPost(e) {
 			const token = this.$store.state.user.token;
 			const userId = this.$store.state.user.userId;
-			console.log(userId)
+			let input = this.$refs.fileInput
+			let imageUrl = input.files
+			console.log(imageUrl)
 			Axios.post("http://localhost:3000/api/post/create", {
 				userId: userId,
 				title: this.formData.title, 
 				description: this.formData.description,
-				file: this.formData.file
+				file: imageUrl[0]
 				}, {
 					headers: {
 						['Authorization']: `Basic ${token}`,
@@ -124,18 +139,19 @@ export default {
 					style="resize: none;">
 					</textarea>
     		    </div>
-    		    
     		    <div class="form-group mb-2">
     		        <p><span class="require">*</span> - champs obligatoires</p>
     		        <label for="file" class="btn btn-outline-danger btn-sm" >
 						<font-awesome-icon icon="fa-solid fa-plus" /> Choisir un fichier
-    		        </label>   
+    		        </label>  
+					<div v-if="this.previewImage" class="m-4 imagePreview" :style="{ 'background-image': `url(${previewImage})` }" @click="selectImage"></div>
 					<input 
+						ref="fileInput"
+						@input="pickFile"
 						type="file"
 						accept="image/*, video/*"
 						class="input-file"
 						id="file"
-						@change="uploadFiles($event.target.files)"
 					/>
     		    </div>
     		    <div class="form-group  d-flex justify-content-end">
@@ -174,6 +190,15 @@ p {
 
 .input-file {
     display: none;
+}
+
+.imagePreview {
+	max-width: 700px;
+	height: 250px;
+	display: block;
+	cursor: pointer;
+	background-size: cover;
+	background-position: center center;
 }
 
 </style>
