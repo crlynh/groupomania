@@ -1,16 +1,44 @@
 <script>
+import Axios from 'axios';
+
 export default {
     name: 'likebutton',
+    data() {
+        return {
+            likesData: {
+                likes : 0,
+                userLiked:'',
+            }
+        }
+    },
 
+    methods: {
+        getLikes() {
+        const token = this.$store.state.user.token  
+        const userId = this.$store.state.user.userId      
+        Axios.post(`http://localhost:3000/api/post/${userId}/like`, {
+			headers: {
+				['Authorization']: `Basic ${token}`,
+            },
+        })
+            .then(res => this.likes = res.data,
+            console.log(this.likesData))
+            .catch(err => console.log(err))
+        }, 
+    },
+
+    mounted() {
+        // this.getLikes()
+    }
 }
 </script>
 
-<template>
+<template v-for="(like, index) in likesData" :key="index">
 
 <section>
 
     <div class="card_button d-flex justify-content-end pt-2 m-3 border-top">
-        <div class="card_button_likes d-flex">
+        <div class="card_button_likes">
                 <font-awesome-icon class="fa-regular" icon="fa-regular fa-heart"/>
                 <font-awesome-icon class="fa-solid" icon="fa-solid fa-heart"/>           
         </div>
@@ -22,7 +50,6 @@ export default {
 </template>
 
 <style lang="scss">
-
 .card_button {
     position:relative;
     &_likes svg{
@@ -46,5 +73,4 @@ export default {
         transform: scale(1.15);  
     }
 }
-
 </style>

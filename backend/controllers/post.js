@@ -25,6 +25,7 @@ exports.getOnePost = (req, res, next) => {
   .catch((error) => res.status(404).json({error: error}));
 };
 
+// Création d'un post
 exports.createPost = async (req, res, next) => {
   try {
       const userId = req.body.userId;
@@ -41,7 +42,6 @@ exports.createPost = async (req, res, next) => {
               likes: 0,
               usersLiked: [],
           };
-          console.log(req.file)
       await Post.create(post);
       res.json({ msg: "Publication réussie" });
   } catch (error) {
@@ -51,25 +51,39 @@ exports.createPost = async (req, res, next) => {
 
 // Modification d'un post
 exports.editPost = (req, res, next) => {
-  // const postObject = req.file ? {
-  //     ...JSON.parse(req.body.post),
-  //     imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-  // } : { ...req.body };
-
-  // delete postObject._userId;
   Post.findOne({_id: req.params.id})
       .then((post) => {
-          if (JSON.stringify(post.userId) !== JSON.stringify(mongoose.Types.ObjectId(req.auth.userId))) {
-              res.status(401).json({ message : 'Non autorisé'});
-          } else {
-              Post.updateOne({ _id: req.params.id}, { title: req.body.title, description: req.body.description })
-              .then(() => res.status(200).json({message : 'Post modifié !'}))
-              .catch(error => res.status(401).json({ message : 'Impossible de modifier le post' }));
-          }
-      })
+        const oldUrl = post.imageUrl;
+        // const postObject = {}
+        if (req.file) { 
+            post.imageUrl = req.file.filename
+        } else {
+            post.description = req.file.description,
+            post.title = req.file.title
+        }            
+        
+        if (JSON.stringify(post.userId) !== JSON.stringify(mongoose.Types.ObjectId(req.auth.userId))) {
+            res.status(401).json({ message : 'Non autorisé'});
+        } else {
+                if(req.file) {
+                    let splitUrl = oldUrl;
+
+                    fs.unlink(`images/${splitUrl}`, () => {
+                        Post.updateOne({ _id: req.params.id }, post)
+                            .then(() => res.status(200).json({ message: 'Post modifié !' }))
+                            .catch(error => res.status(400).json({ message : 'Impossible de modifier le post' }));
+                        });
+                    } else {
+                        Post.updateOne({ _id: req.params.id}, post)
+                        .then(() => res.status(200).json({message : 'Post modifié !'}))
+                        .catch(error => res.status(401).json({ message : 'Impossible de modifier le post' }));
+                    }
+            }
+        })
       .catch((error) => {
           res.status(400).json({ error });
       });
+
 };
 
 // Suppression d'un post
@@ -93,46 +107,64 @@ exports.deletePost = (req, res, next) => {
 };
 
 // Like d'un post
-exports.likePost = (req, res, next) => {
-  let postId = req.params.id
-  let userId = req.body.userId
-  let like = req.body.like
+// exports.likePost = (req, res, next) => {
+//   let postId = req.params.id
+//   let userId = req.body.userId
+//   let like = req.body.like
 
-  switch(like) {
-    // Si like = 1, l'utilisateur aime (= likes)
-    case 1 : 
-    Post.updateOne(
-      { _id: postId }, 
-      {
-        $push : { usersLiked: userId },
-        $inc : { likes: +1 }
-      }
-    )  
-      .then(() => res.status(200).json({message: "J'aime"}))
-      .catch((error) => res.status(400).json({ error }));
+//   switch(like) {
+//     // Si like = 1, l'utilisateur aime (= likes)
+//     case 1 : 
+//     Post.updateOne(
+//       { _id: postId }, 
+//       {
+//         $push : { usersLiked: userId },
+//         $inc : { likes: +1 }
+//       }
+//     )  
+//       .then(() => res.status(200).json({message: "J'aime"}))
+//       .catch((error) => res.status(400).json({ error }));
 
-    break;
+//     break;
 
-    // Si like = 0, l'utilisateur annule son like 
-    case 0 :
-      Post.findOne(
-        { _id: postId }
-      )
-      .then((post) => {
-        if (post.usersLiked.includes(userId)) {
-          Post.updateOne(
-            { _id: postId },
-            {
-              $pull: { usersLiked: userId },
-              $inc: { likes: -1 }
-            }
-          )
-            .then(() => res.status(200).json({message: "Unliked"}))
-            .catch((error) => res.status(400).json({ error }))
-        }
-      })
-      .catch((error) => res.status(404).json({ error }))
+//     // Si like = 0, l'utilisateur annule son like 
+//     case 0 :
+//       Post.findOne(
+//         { _id: postId }
+//       )
+//       .then((post) => {
+//         if (post.usersLiked.includes(userId)) {
+//           Post.updateOne(
+//             { _id: postId },
+//             {
+//               $pull: { usersLiked: userId },
+//               $inc: { likes: -1 }
+//             }
+//           )
+//             .then(() => res.status(200).json({message: "Unliked"}))
+//             .catch((error) => res.status(400).json({ error }))
+//         }
+//       })
+//       .catch((error) => res.status(404).json({ error }))
   
-    break;
-  }
+//     break;
+//   }
+// };
+
+exports.likePost = (req, res, next) => {
+
+  Post.findOne({ _id: req.body._id })
+      .then(post => {
+          if (!post.usersLiked.includes(req.body.userId) && req.body.likes === 1) {
+              Post.updateOne({ _id: req.body._id }, { $inc: { likes: 1 }, $push: { usersLiked: req.body.userId } })
+                  .then(() => res.status(200).json({ message: "J'aime !" }))
+                  .catch(error => res.status(400).json({ error }));
+          }
+          if (post.usersLiked.includes(req.body.userId) && req.body.likes === -1) {
+              Post.updateOne({ _id: req.body._id }, { $inc: { likes: -1 }, $pull: { usersLiked: req.body.userId } })
+                  .then(() => res.status(200).json({ message: "Je n'aime plus !" }))
+                  .catch(error => res.status(400).json({ error }));
+          }
+      })
+      .catch(error => res.status(500).json({ error }));
 };

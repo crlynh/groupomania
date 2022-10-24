@@ -68,7 +68,7 @@ export default {
 			const userId = this.$store.state.user.userId;
 			let input = this.$refs.fileInput
 			let imageUrl = input.files
-			console.log(imageUrl)
+			console.log(input.files)
 			Axios.post("http://localhost:3000/api/post/create", {
 				userId: userId,
 				title: this.formData.title, 
@@ -89,7 +89,6 @@ export default {
 			})
 			e.preventDefault();
 		},
-
 	}
 }
 
@@ -144,7 +143,6 @@ export default {
     		        <label for="file" class="btn btn-outline-danger btn-sm" >
 						<font-awesome-icon icon="fa-solid fa-plus" /> Choisir un fichier
     		        </label>  
-					<div v-if="this.previewImage" class="m-4 imagePreview" :style="{ 'background-image': `url(${previewImage})` }" @click="selectImage"></div>
 					<input 
 						ref="fileInput"
 						@input="pickFile"
@@ -153,6 +151,8 @@ export default {
 						class="input-file"
 						id="file"
 					/>
+					<div v-if="this.previewImage" class="m-4 imagePreview" :style="{ 'background-image': `url(${previewImage})` }" @click="selectImage" alt = "Image de la publication"></div>
+					
     		    </div>
     		    <div class="form-group  d-flex justify-content-end">
     		        <button 

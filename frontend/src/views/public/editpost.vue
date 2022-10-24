@@ -14,14 +14,9 @@ export default {
     data() {
 		return {
 			formData: {},
+			previewImage: null,
 		};
 	},
-
-    // setup(){
-    //     const route = useRoute();
-    //     const postId = route.params.id;
-    //     console.log(postId)
-    // },
 
 	computed: {
     	...mapState(['status']),  
@@ -35,16 +30,37 @@ export default {
 	},
 
 	methods: {
+		selectImage() {
+			this.$refs.fileInput.click()
+		},
+
+		pickFile() {
+			let input = this.$refs.fileInput
+			let imageUrl = input.files
+			if (imageUrl && imageUrl[0]) {
+				let reader = new FileReader
+				reader.onload = e => {
+					this.previewImage = e.target.result
+				}
+				reader.readAsDataURL(imageUrl[0])
+				this.$emit('input', imageUrl[0])
+			}
+		},
+
         editPost() {
-			const token = this.$store.state.user.token
-            let postId = this.formData._id
+			const token = this.$store.state.user.token;
+            let postId = this.formData._id;
 			console.log(this.formData)
+			let input = this.$refs.fileInput
+			let imageUrl = input.files
 			Axios.put('http://localhost:3000/api/post/'+postId, {
 				title : this.formData.title,
 				description : this.formData.description,
+				file: imageUrl[0]
 			}, {
 				headers: {
 					'Authorization': `Basic ${token}`,
+					"Content-Type": "multipart/form-data"
 				},   				
 			})
 			.then((res) => {
@@ -61,9 +77,17 @@ export default {
         Axios.get('http://localhost:3000/api/post/'+postId, {
 			headers: {
 				['Authorization']: `Basic ${token}`,
+				"Content-Type": "multipart/form-data"
 			},   
 		})
-        .then(res => this.formData = res.data)
+        .then(res => {
+			if (this.formData) {
+				this.previewImage = 'http://localhost:3000/images/' + res.data.imageUrl
+				this.formData = res.data
+			} else {
+				this.previewImage = 'http://localhost:3000/images/' + res.data.imageUrl
+			}
+		})
         .catch(err => console.log(err))
     }, 
 }
@@ -119,15 +143,19 @@ export default {
     		        <p><span class="require">*</span> - champs obligatoires</p>
     		        <label for="file" class="btn btn-outline-danger btn-sm" >
 						<font-awesome-icon icon="fa-solid fa-plus" /> Choisir un fichier
-    		        </label>   
+    		        </label>  
 					<input 
+						ref="fileInput"
+						@input="pickFile"
 						type="file"
 						accept="image/*, video/*"
 						class="input-file"
 						id="file"
-						@change="uploadFiles($event.target.files)"
-					/>
+					/> 
+					<div v-if="this.previewImage" class="m-4 imagePreview" id="imagePreview" :style="{ 'background-image': `url(${previewImage})` }" @click="selectImage">
+					</div>					
     		    </div>
+
     		    <div class="form-group  d-flex justify-content-end">
     		        <button 
 					type="submit" 

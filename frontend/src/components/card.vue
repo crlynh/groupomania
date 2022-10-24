@@ -17,33 +17,6 @@ export default {
       };    
     },
 
-    computed: {
-      imageUrlExtension() {
-      if (this.posts.imageUrl == null) {
-        let extensionType = "";
-        return extensionType;
-      }
-
-      let extension = this.posts.imageUrl.split(".")[1];
-      let extensionType = "";
-      switch (extension) {
-        case "jpg":
-          extensionType = "image";
-          break;
-        case "jpeg":
-          extensionType = "image";
-          break;
-        case "png":
-          extensionType = "image";
-          break;
-        default:
-          null;
-      }
-      return extensionType;
-    },
-
-    },
-
     methods: {
       dateTime(createAt) {
       moment.locale('fr');
@@ -111,7 +84,7 @@ export default {
         } else {
           return this.$router.push({name:'editPost', params: {id: postId}})
         }
-      }
+      },
 
     },
     mounted() {
@@ -127,15 +100,15 @@ export default {
 <!------------------- Publication Card ------------------->
 <section 
   v-for="(post, index) in posts" :key="post._id"
-  class="bg-white border mt-2 card">   
+  class="bg-white border mt-2">   
   <div class="d-flex flex-row justify-content-between align-items-center p-2">
     <div class="d-flex flex-row align-items-center feed-text px-2"><img class="rounded-circle shadow-2" style="width: 45px;" alt="Avatar" src="../assets/images/png-clipart-computer-icons-user-profile-avatar-avatar-heroes-monochrome.png">
         <div class="d-flex flex-column flex-wrap ml-2">
-            <!-- <span class="font-weight-bold">{{post.user.prenom}} {{post.user.nom}}</span> -->
+            <span class="font-weight-bold">{{post.user.prenom}} {{post.user.nom}}</span>
             <span class="text-black-50 time">Posté il y a {{ dateTime(post.post.createAt) }}</span>
         </div>
     </div>
-    <button class = "dropdown p-2 btn btn-lg">
+    <button class = "dropdown p-2 btn btn-lg" v-if="post.user._id = post.post._id">
         <div data-bs-toggle="dropdown">
         <font-awesome-icon icon="fa-solid fa-ellipsis-vertical"/>
         </div>
@@ -151,11 +124,12 @@ export default {
   <div>
     <div class="p-2 px-3 pt-3"><h5>{{post.post.title}}</h5></div>
     <div class="p-2 px-3"><span>{{post.post.description}}</span></div>
-    <div class="imageUrlContainer" >
+    <div class="imageUrlContainer" v-if="post.post.imageUrl">
         <div>
           <div class="feed-image p-2 px-3">
             <img class="onlyimageUrl"
-            alt="image du post"/>   
+            :src="`http://localhost:3000/images/${post.post.imageUrl}`"
+            alt = "image du post"/> 
           </div>   
         </div>
     </div>
@@ -203,6 +177,5 @@ export default {
   min-height: 200px;
   background-color: transparent;
   border-radius: 4px;
-  border:solid
 }
 </style>
