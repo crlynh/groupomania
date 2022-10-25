@@ -51,17 +51,18 @@ exports.createPost = async (req, res, next) => {
 
 // Modification d'un post
 exports.editPost = (req, res, next) => {
-  Post.findOne({_id: req.params.id})
-      .then((post) => {
+    console.log(req.body)
+    Post.findOne({_id: req.params.id})
+    .then((post) => {
         const oldUrl = post.imageUrl;
         // const postObject = {}
         if (req.file) { 
             post.imageUrl = req.file.filename
         } else {
-            post.description = req.file.description,
-            post.title = req.file.title
+            post.description = req.body.description,
+            post.title = req.body.title
         }            
-        
+
         if (JSON.stringify(post.userId) !== JSON.stringify(mongoose.Types.ObjectId(req.auth.userId))) {
             res.status(401).json({ message : 'Non autorisé'});
         } else {
@@ -80,9 +81,9 @@ exports.editPost = (req, res, next) => {
                     }
             }
         })
-      .catch((error) => {
-          res.status(400).json({ error });
-      });
+    .catch((error) => {
+        res.status(400).json({ error });
+    });
 
 };
 

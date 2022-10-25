@@ -7,7 +7,6 @@ import {useRoute} from "vue-router";
 
 export default {
     name: 'editPost',
-    props: ['postId'],
     components: {
         navbar,
     },
@@ -81,11 +80,9 @@ export default {
 			},   
 		})
         .then(res => {
-			if (this.formData) {
-				this.previewImage = 'http://localhost:3000/images/' + res.data.imageUrl
-				this.formData = res.data
-			} else {
-				this.previewImage = 'http://localhost:3000/images/' + res.data.imageUrl
+			this.formData = res.data
+			if (res.data.imageUrl) {
+			this.previewImage = 'http://localhost:3000/images/' + res.data.imageUrl
 			}
 		})
         .catch(err => console.log(err))
@@ -152,7 +149,7 @@ export default {
 						class="input-file"
 						id="file"
 					/> 
-					<div v-if="this.previewImage" class="m-4 imagePreview" id="imagePreview" :style="{ 'background-image': `url(${previewImage})` }" @click="selectImage">
+					<div v-if="this.previewImage" class="m-4 imagePreview" id="imagePreview" :style="{ 'background-image': `url(${previewImage})` }" @click="selectImage"> 
 					</div>					
     		    </div>
 
