@@ -47,9 +47,7 @@ export default {
           		this.formData.titleError = true;
         	}
       	},
-		selectImage() {
-			this.$refs.fileInput.click()
-		},
+
 		pickFile() {
 			let input = this.$refs.fileInput
 			let imageUrl = input.files
@@ -68,7 +66,6 @@ export default {
 			const userId = this.$store.state.user.userId;
 			let input = this.$refs.fileInput
 			let imageUrl = input.files
-			console.log(input.files)
 			Axios.post("http://localhost:3000/api/post/create", {
 				userId: userId,
 				title: this.formData.title, 
@@ -151,7 +148,7 @@ export default {
 						class="input-file"
 						id="file"
 					/>
-					<div v-if="this.previewImage" class="m-4 imagePreview" :style="{ 'background-image': `url(${previewImage})` }" @click="selectImage" alt = "Image de la publication"></div>
+					<div v-if="this.previewImage" class="m-4 imagePreview" :style="{ 'background-image': `url(${previewImage})` }" alt = "Image de la publication"></div>
 					
     		    </div>
     		    <div class="form-group  d-flex justify-content-end">

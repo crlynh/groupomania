@@ -159,7 +159,6 @@ export default {
 					:disabled="!validatedFields" 
 					class="btn btn-danger gradient-custom-2"
 					:class="{'button-disabled' : !validatedFields}"
-                    @click="editPost()"
 					>
                         Modifier la publication
     		        </button>
