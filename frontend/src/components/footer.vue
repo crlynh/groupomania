@@ -24,11 +24,6 @@ export default {
         <i class="fab fa-linkedin"></i>
       </a>
     </div>
-                        <div class="d-flex align-items-center">
-                        <router-link to="/admin/home">
-                        <a>Accès administrateur</a>
-                        </router-link>
-                    </div>
     <!-- Right -->
   </section>
   <!-- Section: Social media -->

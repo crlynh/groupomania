@@ -12,7 +12,7 @@ const postSchema = mongoose.Schema({
   updateAt: { type: Date, default: Date.now},
 
   // système de like 
-  likes: { type: Number, defaut: 0 },
+  likes: { type: Number, default: 0 },
   usersLiked: { type: [String] },
   
 });

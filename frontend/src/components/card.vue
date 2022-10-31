@@ -1,36 +1,32 @@
 <script>
 import Axios from 'axios';
 
-import likebutton from './likebutton.vue'
+// import likebutton from './likebutton.vue'
 import moment from 'moment/min/moment-with-locales'
 import 'moment/locale/fr'
 
 export default {
     name:'card',
     components: {
-      likebutton,
     },
+
     data() {
       return {
         posts : [],
-        userCanUpdate : true,
       };    
     },
+
+    // computed: {
+    //   isLiked(index) {
+    //     const userId = this.$store.state.user.userId
+    //     return this.posts[index].post.usersLiked.includes(userId)
+    //   }
+    // },
 
     methods: {
       dateTime(createAt) {
       moment.locale('fr');
         return moment(createAt).startOf('second').fromNow(createAt);
-      },
-
-      isUserCanUpdate(){
-        const userId = this.$store.state.user.userId
-        const postUserId = this.posts[0].post._id
-        if (userId == postUserId) {
-            this.userCanUpdate = true
-          } else {
-            this.userCanUpdate = false
-          }          
       },
 
       getAllPosts() {
@@ -48,23 +44,6 @@ export default {
           })
           .catch(err => console.log(err))
       }, 
-
-      deletePost(index) {
-      const token = this.$store.state.user.token;
-      let postId = this.posts[index].post._id
-      if (
-          window.confirm(
-            "Êtes-vous sûr de vouloir supprimer cette publication ?"
-          )
-      ) 
-      Axios.delete('http://localhost:3000/api/post/'+postId, {
-					headers: {
-						['Authorization']: `Basic ${token}`,
-					},        
-      })
-      .then(res => this.posts.splice(index, 1))
-      .catch(err => alert("Vous n'avez pas les droits pour supprimer cette publication"))
-      },
 
       editPost(postId) {
         const token = this.$store.state.user.token;
@@ -86,12 +65,56 @@ export default {
         }
       },
 
-    },
+      deletePost(index) {
+      const token = this.$store.state.user.token;
+      let postId = this.posts[index].post._id
+      if (
+          window.confirm(
+            "Êtes-vous sûr de vouloir supprimer cette publication ?"
+          )
+      ) 
+      Axios.delete('http://localhost:3000/api/post/'+postId, {
+					headers: {
+						['Authorization']: `Basic ${token}`,
+					},        
+      })
+      .then(res => this.posts.splice(index, 1))
+      .catch(err => alert("Vous n'avez pas les droits pour supprimer cette publication"))
+      },
+
+    addLikes(index) {
+      const token = this.$store.state.user.token  
+      const userId = this.$store.state.user.userId 
+        let postId = this.posts[index].post._id
+        let liked = 1 
+        if (this.posts[index].post.usersLiked.includes(userId)=== true) {
+          liked = -1
+        }
+          Axios.post(`http://localhost:3000/api/post/like`, {
+            userId: userId,
+            _id: postId,
+            likes: liked
+          }, {
+            headers: {
+              ['Authorization']: `Basic ${token}`,
+            },
+          })
+          .then(res => {
+            this.isLiked = res.data
+            console.log(this.isLiked)
+            this.getAllPosts();       
+
+          })
+          .catch(err => (console.log(err)))
+        }
+},
+
     mounted() {
       this.getAllPosts()
-    },
-}
 
+    }
+
+}
 
 </script>
 
@@ -108,7 +131,7 @@ export default {
             <span class="text-black-50 time">Posté il y a {{ dateTime(post.post.createAt) }}</span>
         </div>
     </div>
-    <button class = "dropdown p-2 btn btn-lg" v-if="post.user._id = post.post._id">
+    <button class= "dropdown p-2 btn btn-lg"  v-if="post.user._id === this.$store.state.user.userId">
         <div data-bs-toggle="dropdown">
         <font-awesome-icon icon="fa-solid fa-ellipsis-vertical"/>
         </div>
@@ -133,7 +156,14 @@ export default {
           </div>   
         </div>
     </div>
-    <likebutton></likebutton>
+
+    <div class="card_button pt-3 border-top">
+      <div class="card_button_likes d-flex justify-content-end align-items-center" @click="addLikes(index)">
+        <font-awesome-icon v-if="post.post.usersLiked.includes(this.$store.state.user.userId)" class="fa-solid one red" icon="fa-solid fa-heart"/>
+        <font-awesome-icon v-else class="fa-solid two grey" icon="fa-solid fa-heart"/>
+        <span class="count" id="count" data-count="0">{{post.post.likes}}</span> 
+      </div>
+    </div>
 
   </div>
 </section>
@@ -141,7 +171,7 @@ export default {
 </main>
 </template>
 
-<style>
+<style lang="scss">
 
 .feed-image img {
   width: 100%;
@@ -178,4 +208,31 @@ export default {
   background-color: transparent;
   border-radius: 4px;
 }
+
+.card_button {
+    margin: 20px 15px 15px 15px;
+    position: relative;
+    &_likes svg{
+        &.one{
+            font-size: 20px;
+            margin: 17px;
+        }
+    cursor: pointer;
+    margin-right: 16px;
+    position: absolute;
+    background-color: transparent;
+    border: none;
+    font-size:22px;
+    transition:200ms;
+    }
+}
+
+.red {
+  color: #FD2D01;
+}
+
+.grey {
+  color: #d9d9d9;
+}
+
 </style>

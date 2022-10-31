@@ -23,7 +23,7 @@ user = {
       prenom: '',
       userId: -1,
       token: '',
-      Admin: false,
+      isAdmin: false,
     };
   }
 }
@@ -35,7 +35,7 @@ const store = createStore({
     user: user,
     data: {
       email: '',
-      Admin: false,
+      isAdmin: false,
     },
   },
   mutations: {

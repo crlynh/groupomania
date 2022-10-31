@@ -113,54 +113,52 @@ exports.deletePost = (req, res, next) => {
 
 // Like d'un post
 // exports.likePost = (req, res, next) => {
-//   let postId = req.params.id
-//   let userId = req.body.userId
-//   let like = req.body.like
+//     let postId = req.params.id
+//     let userId = req.body.userId
+//     let like = req.body.like
 
-//   switch(like) {
+//     switch(like) {
 //     // Si like = 1, l'utilisateur aime (= likes)
 //     case 1 : 
 //     Post.updateOne(
-//       { _id: postId }, 
-//       {
-//         $push : { usersLiked: userId },
-//         $inc : { likes: +1 }
-//       }
+//         { _id: postId }, 
+//             {
+//             $push : { usersLiked: userId },
+//             $inc : { likes: +1 }
+//             }
 //     )  
-//       .then(() => res.status(200).json({message: "J'aime"}))
-//       .catch((error) => res.status(400).json({ error }));
-
+//         .then(() => res.status(200).json({message: "J'aime"}))
+//         .catch((error) => res.status(400).json({ error }));
 //     break;
 
 //     // Si like = 0, l'utilisateur annule son like 
 //     case 0 :
-//       Post.findOne(
-//         { _id: postId }
-//       )
-//       .then((post) => {
-//         if (post.usersLiked.includes(userId)) {
-//           Post.updateOne(
-//             { _id: postId },
-//             {
-//               $pull: { usersLiked: userId },
-//               $inc: { likes: -1 }
-//             }
-//           )
-//             .then(() => res.status(200).json({message: "Unliked"}))
+//         Post.findOne(
+//             { _id: postId }
+//             )
+//         .then((post) => {
+//             if (post.usersLiked.includes(userId)) {
+//                 Post.updateOne(
+//                     { _id: postId },
+//                         {
+//                         $pull: { usersLiked: userId },
+//                         $inc: { likes: -1 }
+//                     }
+//                 )
+//             .then(() => res.status(200).json({message: "Je n'aime plus"}))
 //             .catch((error) => res.status(400).json({ error }))
-//         }
-//       })
-//       .catch((error) => res.status(404).json({ error }))
+//             }   
+//         })
+//         .catch((error) => res.status(404).json({ error }))
 //     break;
-//   }
+//     }
 // };
 
 exports.likePost = (req, res, next) => {
-
     Post.findOne({ _id: req.body._id })
         .then(post => {
             if (!post.usersLiked.includes(req.body.userId) && req.body.likes === 1) {
-                Post.updateOne({ _id: req.body._id }, { $inc: { likes: 1 }, $push: { usersLiked: req.body.userId } })
+                Post.updateOne({ _id: req.body._id }, { $inc: { likes: +1 }, $push: { usersLiked: req.body.userId } })
                     .then(() => res.status(200).json({ message: "J'aime !" }))
                     .catch(error => res.status(400).json({ error }));
             }

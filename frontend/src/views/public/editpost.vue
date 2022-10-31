@@ -49,7 +49,6 @@ export default {
         editPost() {
 			const token = this.$store.state.user.token;
             let postId = this.formData._id;
-			console.log(this.formData)
 			let input = this.$refs.fileInput
 			let imageUrl = input.files
 			Axios.put('http://localhost:3000/api/post/'+postId, {
