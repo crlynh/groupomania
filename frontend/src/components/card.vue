@@ -1,7 +1,7 @@
 <script>
 import Axios from 'axios';
+import jwt_decode from "jwt-decode"
 
-// import likebutton from './likebutton.vue'
 import moment from 'moment/min/moment-with-locales'
 import 'moment/locale/fr'
 
@@ -16,32 +16,28 @@ export default {
       };    
     },
 
-    // computed: {
-    //   isLiked(index) {
-    //     const userId = this.$store.state.user.userId
-    //     return this.posts[index].post.usersLiked.includes(userId)
-    //   }
-    // },
-
     methods: {
       dateTime(createAt) {
       moment.locale('fr');
         return moment(createAt).startOf('second').fromNow(createAt);
       },
 
+      getUserData() {
+        const token = this.$store.state.user.token
+        const decoded = jwt_decode(token)
+        this.users = decoded
+        return this.users
+      },
+
       getAllPosts() {
         const token = this.$store.state.user.token
-        const userId = this.$store.state.user.userId
         Axios.get('http://localhost:3000/api/post/home', {
 					headers: {
 						['Authorization']: `Basic ${token}`,
 						"Content-Type": "multipart/form-data"            
 					},            
         })
-          .then(res => {
-            this.posts = res.data,
-            console.log(this.posts)
-          })
+          .then(res => this.posts = res.data)
           .catch(err => console.log(err))
       }, 
 
@@ -58,7 +54,7 @@ export default {
         })
         .catch(err => console.log(err))
 
-        if ( this.posts.userId == userId ) { 
+        if (this.posts.userId == userId) { 
           return alert("Vous n'avez pas les droits pour modifier cette publication")     
         } else {
           return this.$router.push({name:'editPost', params: {id: postId}})
@@ -82,7 +78,7 @@ export default {
       .catch(err => alert("Vous n'avez pas les droits pour supprimer cette publication"))
       },
 
-    addLikes(index) {
+      addLikes(index) {
       const token = this.$store.state.user.token  
       const userId = this.$store.state.user.userId 
         let postId = this.posts[index].post._id
@@ -101,7 +97,6 @@ export default {
           })
           .then(res => {
             this.isLiked = res.data
-            console.log(this.isLiked)
             this.getAllPosts();       
 
           })
@@ -111,7 +106,7 @@ export default {
 
     mounted() {
       this.getAllPosts()
-
+      this.getUserData()
     }
 
 }
@@ -131,7 +126,7 @@ export default {
             <span class="text-black-50 time">Posté il y a {{ dateTime(post.post.createAt) }}</span>
         </div>
     </div>
-    <button class= "dropdown p-2 btn btn-lg"  v-if="post.user._id === this.$store.state.user.userId">
+    <button class= "dropdown p-2 btn btn-lg"  v-if="post.user._id === this.$store.state.user.userId || this.getUserData().role === 1">
         <div data-bs-toggle="dropdown">
         <font-awesome-icon icon="fa-solid fa-ellipsis-vertical"/>
         </div>

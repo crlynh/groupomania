@@ -38,7 +38,8 @@ exports.login = (req, res, next) => {
                             { userId: user._id,
                             nom: user.nom,
                             prenom: user.prenom,
-                            email: user.email
+                            email: user.email,
+                            role: user.role
                             },
                             process.env.TOKEN_SECRET,
                             { expiresIn: '2h' }

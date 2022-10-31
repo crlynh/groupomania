@@ -61,12 +61,11 @@ exports.editPost = (req, res, next) => {
             post.title = req.body.title
         }            
 
-        if (post.userId != req.auth.userId) {
+        if (post.userId != req.auth.userId && req.auth.role === 0) {
             res.status(401).json({ message : 'Non autorisé'});
         } else {
                 if(req.file) {
                     let splitUrl = oldUrl;
-                    console.log(splitUrl)
                     fs.unlink(`images/${splitUrl}`, () => {
                         Post.updateOne({ _id: req.params.id }, post)
                             .then(() => res.status(200).json({ message: 'Post modifié !' }))
@@ -89,7 +88,7 @@ exports.editPost = (req, res, next) => {
 exports.deletePost = (req, res, next) => {
     Post.findOne({ _id: req.params.id})
         .then(post => {
-                if (post.userId != req.auth.userId) {
+                if (post.userId != req.auth.userId && req.auth.role === 0) {
                 res.status(401).json({message: 'Non autorisé'});
             } else {
                 let splitUrl = post.imageUrl
