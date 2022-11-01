@@ -4,8 +4,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import * as Auth from '../views/auth'
 import * as Public from '../views/public'
-import * as Admin from '../views/admin'
-
 import { authGuard } from '../_helpers/auth-guard.js'
 
 const routes = [
@@ -23,16 +21,6 @@ const routes = [
             { path: '/home', component: Public.home },
             { path: '/createpost/', component: Public.createpost, prop: true },
             { path: '/editpost/:id(\\d+)', name : 'editPost', component: Public.editpost},
-        ],
-    },
-
-    { 
-        path: '/admin',
-        name: 'admin',
-        component: Admin.adminLayout, 
-        children: [ 
-            { path: '/admin/home', component: Admin.home },
-            { path: '/admin/users/edit', component: Admin.editusers, props: true }
         ],
     },
 ]

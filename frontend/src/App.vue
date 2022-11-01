@@ -24,9 +24,9 @@ export default {
   methods: {
     logoutExpiredToken() {
       Axios.interceptors.response.use(response => {
-    return response
-}, error => {
-    console.log(error)
+      return response
+      }, error => {
+      console.log(error)
     
 
     if(!error.response){
@@ -53,6 +53,5 @@ export default {
 <router-view></router-view>
 </template>
 
-<style scoped>
-
+<style>
 </style>
