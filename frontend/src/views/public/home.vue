@@ -28,7 +28,7 @@ export default {
       }
     },
 
-     backToTop() {
+    backToTop() {
   document.body.scrollTop = 0;
   document.documentElement.scrollTop = 0;
 },

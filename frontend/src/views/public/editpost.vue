@@ -106,23 +106,20 @@ export default {
 <!------------ Back to home page ------------>		
 
 		<div class="col-md-8 col-md-offset-2 ">
-			<h1 class="mt-3 mb-4">Modifier la publication</h1>
-
+			<h1 class="mt-3 mb-4">Modifier la publication</h1>	
 			<form @submit.prevent="editPost">
-
 				<div class="form-group">
 					<label for="title">Titre <span class="require">*</span></label>
 					<input 
-					type="text" 
-					class="form-control"
-					id="title" 
-					v-model="formData.title"
-					required
-					@focusout="isTitleValid"
+						type="text" 
+						class="form-control"
+						id="title" 
+						v-model="formData.title"
+						required
+						@focusout="isTitleValid"
 					/>
 					<p class="font-italic" v-if="formData.titleError">Le titre est obligatoire et doit contenir entre 3 et 50 caractères</p>
-				</div>
-
+				</div>	
 				<div class="form-group">
 					<label for="description">Description</label>
 					<textarea 
@@ -134,7 +131,6 @@ export default {
 					style="resize: none;">
 					</textarea>
 				</div>
-
 				<div class="form-group mb-2">
 					<p><span class="require">*</span> - champs obligatoires</p>
 					<label for="file" class="btn btn-outline-danger btn-sm" >
@@ -153,16 +149,15 @@ export default {
 				</div>
 
 				<div class="form-group  d-flex justify-content-end">
-				<button 
+					<button 
 					type="submit" 
 					:disabled="!validatedFields" 
 					class="btn btn-danger gradient-custom-2"
 					:class="{'button-disabled' : !validatedFields}"
 					>
                         Modifier la publication
-				</button>
-				</div>
-
+					</button>
+					</div>
 			</form>
 		</div>
 		

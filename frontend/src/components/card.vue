@@ -119,7 +119,7 @@ export default {
 <section 
   v-for="(post, index) in posts" :key="post._id"
   class="bg-white border mt-2">   
-  <div class="d-flex flex-row justify-content-between align-items-center p-2">
+  <div class="d-flex flex-row justify-content-between align-items-center p-3">
     <div class="d-flex flex-row align-items-center feed-text px-2"><img class="rounded-circle shadow-2" style="width: 45px;" alt="Avatar" src="../assets/images/png-clipart-computer-icons-user-profile-avatar-avatar-heroes-monochrome.png">
         <div class="d-flex flex-column flex-wrap ml-2">
             <span class="font-weight-bold">{{post.user.prenom}} {{post.user.nom}}</span>
@@ -144,7 +144,7 @@ export default {
     <div class="p-2 px-3"><span>{{post.post.description}}</span></div>
     <div class="imageUrlContainer" v-if="post.post.imageUrl">
         <div>
-          <div class="feed-image p-2 px-3">
+          <div class="feed-image">
             <img class="onlyimageUrl"
             :src="`http://localhost:3000/images/${post.post.imageUrl}`"
             alt = "image du post"/> 
@@ -170,7 +170,7 @@ export default {
 
 .feed-image img {
   width: 100%;
-  height: auto
+  height: auto;
 }
 
 .feed-text {
@@ -196,12 +196,15 @@ export default {
 
 .imageUrlContainer {
   display: flex;
-  padding: 10px;
-  margin: 10px;
+  margin: 10px 0px;
   max-width: 100%;
   min-height: 200px;
   background-color: transparent;
   border-radius: 4px;
+}
+
+.onlyimageUrl {
+  padding: 10px 0px;
 }
 
 .card_button {
