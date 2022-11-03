@@ -2,57 +2,55 @@
 import { mapState } from 'vuex'
 
 export default {
-    name: 'login',
-    data() {
-      return {
-        mode:'login',
-        email: '',
-        emailError:'',
-        password: '',
-        passwordError:'',
-        regEmail: /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/gim,
-        regPassword: /^(?=.*\d).{8,}$/gim,
-      }    
+  name: 'login',
+  data() {
+    return {
+      mode:'login',
+      email: '',
+      emailError:'',
+      password: '',
+      passwordError:'',
+      regEmail: /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/gim,
+      regPassword: /^(?=.*\d).{8,}$/gim,
+    }    
   },
-    computed: {
-      validatedFields() {
-          if (this.email !== "" && this.password !== "" && this.emailError !== true && this.passwordError !== true) {
-            return true
-          } else {
-            return false
-          }
-        },
-      ...mapState(['status'])      
-    },
-    methods: {
-      isEmailValid() {
-        if (this.email !== "" && this.regEmail.test(this.email)) {
-          this.emailError = false;
+
+  computed: {
+    validatedFields() {
+        if (this.email !== "" && this.password !== "" && this.emailError !== true && this.passwordError !== true) {
+          return true
         } else {
-          this.emailError = true;
+          return false
         }
       },
-      isPasswordValid() {
-        if (this.password !== "" && this.regPassword.test(this.password)) {
-          this.passwordError = false;
-        } else {
-        this.passwordError = true;
-        }  
-      },   
+    ...mapState(['status'])      
+  },
+  methods: {
+    isEmailValid() {
+      if (this.email !== "" && this.regEmail.test(this.email)) {
+        this.emailError = false;
+      } else {
+        this.emailError = true;
+      }
+    },
+    isPasswordValid() {
+      if (this.password !== "" && this.regPassword.test(this.password)) {
+        this.passwordError = false;
+      } else {
+      this.passwordError = true;
+      }  
+    },   
 
-
-      handleSubmit(event) {
-        event.preventDefault()
-        this.$store.dispatch('login', {
-          email: this.email,
-          password: this.password,
-          }).then ((response) => {
-          this.$router.push('/home');
-        }, function(error) {
-          console.log(error)
+    handleSubmit(event) {
+      event.preventDefault()
+      this.$store.dispatch('login', {
+        email: this.email,
+        password: this.password,
         })
-      },
+        .then ((res) => this.$router.push('/home'))
+        .catch ((err) => console.log(err))
     }
+  }
 } 
 
 </script>

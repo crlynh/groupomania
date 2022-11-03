@@ -2,7 +2,7 @@
 import navbar from '../../components/navbar.vue'
 import { mapState } from 'vuex';
 
-import Axios from 'axios'
+import Axios from '../../store/caller.axios'
 import {useRoute} from "vue-router";
 
 export default {
@@ -51,7 +51,7 @@ export default {
             let postId = this.formData._id;
 			let input = this.$refs.fileInput
 			let imageUrl = input.files
-			Axios.put('http://localhost:3000/api/post/'+postId, {
+			Axios.put('/post/'+postId, {
 				title : this.formData.title,
 				description : this.formData.description,
 				file: imageUrl[0]
@@ -72,7 +72,7 @@ export default {
 		const token = this.$store.state.user.token;
         const route = useRoute();
         let postId = route.params.id;
-        Axios.get('http://localhost:3000/api/post/'+postId, {
+        Axios.get('/post/'+postId, {
 			headers: {
 				['Authorization']: `Basic ${token}`,
 				"Content-Type": "multipart/form-data"
