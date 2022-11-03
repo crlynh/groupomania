@@ -3,6 +3,7 @@ import login from './views/auth/login.vue'
 import signup from './views/auth/signup.vue'
 import home from './views/public/home.vue'
 import profilecard from './components/profilecard.vue'
+import userscard from './components/userscard.vue'
 import card from './components/card.vue'
 import createpost from './views/public/createpost.vue'
 import navbar from './components/navbar.vue'
@@ -18,6 +19,7 @@ export default {
     footerpage,
     home,
     profilecard,
+    userscard,
     card,
     createpost,
   },

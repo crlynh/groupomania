@@ -19,16 +19,17 @@ export default {
       },
 
       deleteUser() {
-        const userId = this.$store.state.user.userId
-        console.log(userId)
-        if (window.confirm("Êtes-vous sûr de vouloir supprimer ce compte ? Cette action est irréversible")) {
-          Axios.delete('http://localhost:3000/api/user/'+userId)
-          .then(res => localStorage.removeItem('user'),
-          window.location.href  = "/login")
-          .catch(err => console.log(err))
-        } else {
-            return false
-        }
+        alert("Cette fonctionnalité n'est pas encore disponible")
+        // const userId = this.$store.state.user.userId
+        // console.log(userId)
+        // if (window.confirm("Êtes-vous sûr de vouloir supprimer ce compte ? Cette action est irréversible")) {
+        //   Axios.delete('http://localhost:3000/api/user/'+userId)
+        //   .then(res => localStorage.removeItem('user'),
+        //   window.location.href  = "/login")
+        //   .catch(err => console.log(err))
+        // } else {
+        //     return false
+        // }
       }
     },
 
@@ -41,7 +42,7 @@ export default {
 </script>
 
 <template v-for="user in users" :key="user._id">
-  <section class="card shadow rounded col-md-4 h-50 border mb-5 pb-4 position-relative" >
+  <section class="card shadow rounded h-20 border mb-5 pb-4 position-relative" >
     <div class = "dropdown p-2 position-absolute top-0 end-0 m-2" >
       <div data-bs-toggle="dropdown" >
         <font-awesome-icon icon="fa-solid fa-ellipsis-vertical" />
@@ -60,7 +61,4 @@ export default {
 </template>
 
 <style>
-
-
-
 </style>
