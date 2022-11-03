@@ -12,8 +12,8 @@ export default {
 		return {
 			formData: {
 				userId: '',
-				nom: '',
-				prenom:'',
+				lastName: '',
+				firstName:'',
         		title: '',
         		description: '',
 				file:'',

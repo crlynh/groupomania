@@ -13,7 +13,7 @@ exports.getAllUsers = (req, res, next) => {
 exports.getOneUser = (req, res, next) => {
     // User.findOne({_id: req.params.id})
     User.findOne({
-        attributes: ['nom', 'prenom', 'id', 'email'],
+        attributes: ['lastName', 'firstName', 'id', 'email'],
         where: { id: req.params.id }
     })
     .then((user) => res.status(200).json(user))

@@ -54,7 +54,7 @@ export default {
     <div class="card-body text-center">
       <img src="../assets/images/png-clipart-computer-icons-user-profile-avatar-avatar-heroes-monochrome.png" alt="avatar"
         class="rounded-circle img-fluid" style="width: 150px;">
-      <h5 class="my-3">{{ users.prenom }} {{ users.nom }}</h5>
+      <h5 class="my-3">{{ users.firstName }} {{ users.lastName }}</h5>
       <p class="text-muted mb-1">{{ users.email }}</p>
     </div>
   </section>

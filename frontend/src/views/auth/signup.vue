@@ -6,10 +6,10 @@ export default {
     data() {
       return {
         mode:'login',
-        nom: '',
-        nomError: '',
-        prenom: '',
-        prenomError: '',
+        lastName: '',
+        lastNameError: '',
+        firstName: '',
+        firstNameError: '',
         email: '',
         emailError:'',
         password: '',
@@ -20,7 +20,7 @@ export default {
   },
     computed: {
       validatedFields() {
-          if (this.nom != "" && this.prenom != "" && this.email != "" && this.password != "" && this.emailError !== true && this.passwordError !== true) {
+          if (this.lastName != "" && this.firstName != "" && this.email != "" && this.password != "" && this.emailError !== true && this.passwordError !== true) {
             return true;
           } else {
             return false;
@@ -46,8 +46,8 @@ export default {
       handleSubmit() {
         const self = this;
         this.$store.dispatch('signup', {
-          nom: this.nom,
-          prenom: this.prenom,
+          lastName: this.lastName,
+          firstName: this.firstName,
           email: this.email,
           password: this.password,
           }).then ((response) => {
@@ -85,22 +85,22 @@ export default {
                   <div class="col-md-6 mb-4">
                     <div class="form-outline">
                       <input 
-                        v-model="nom"
+                        v-model="lastName"
                         type="text" 
                         id="form3Example1" 
                         class="form-control" 
-                        placeholder="Nom"
+                        placeholder="lastName"
                         />
                     </div>
                   </div>
                   <div class="col-md-6 mb-4">
                     <div class="form-outline">
                       <input 
-                        v-model="prenom"
+                        v-model="firstName"
                         type="text" 
                         id="form3Example2" 
                         class="form-control" 
-                        placeholder="Prénom" 
+                        placeholder="firstName" 
                         />
                     </div>
                   </div>

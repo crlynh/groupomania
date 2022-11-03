@@ -122,7 +122,7 @@ export default {
   <div class="d-flex flex-row justify-content-between align-items-center p-3">
     <div class="d-flex flex-row align-items-center feed-text px-2"><img class="rounded-circle shadow-2" style="width: 45px;" alt="Avatar" src="../assets/images/png-clipart-computer-icons-user-profile-avatar-avatar-heroes-monochrome.png">
         <div class="d-flex flex-column flex-wrap ml-2">
-            <span class="font-weight-bold">{{post.user.prenom}} {{post.user.nom}}</span>
+            <span class="font-weight-bold">{{post.user.firstName}} {{post.user.lastName}}</span>
             <span class="text-black-50 time">Posté il y a {{ dateTime(post.post.createAt) }}</span>
         </div>
     </div>
