@@ -14,7 +14,7 @@ export default {
 
     <!-- Right -->
     <div>
-      <a href="" class="me-4 text-reset">
+      <!-- <a href="" class="me-4 text-reset">
         <i class="fab fa-facebook-f"></i>
       </a>
       <a href="" class="me-4 text-reset">
@@ -22,7 +22,7 @@ export default {
       </a>
       <a href="" class="me-4 text-reset">
         <i class="fab fa-linkedin"></i>
-      </a>
+      </a> -->
     </div>
     <!-- Right -->
   </section>
