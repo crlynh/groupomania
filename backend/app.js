@@ -7,7 +7,8 @@ require('dotenv').config();
 const app = express();
 
 const postRoutes = require('./routes/post');
-const userRoutes = require('./routes/user');
+const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/user')
 
 mongoose.connect(process.env.PASSWORD_MONGOOSE,
   { useNewUrlParser: true,
@@ -26,7 +27,8 @@ app.use((req, res, next) => {
   });
 
 app.use('/api/post', postRoutes);
-app.use('/api/auth', userRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes)
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 module.exports = app;

@@ -1,16 +1,15 @@
 const express = require('express');
 const router = express.Router();
 
-// importation controllers/user.js
-const userCtrl = require('../controllers/user');
+const userCtrl = require('../controllers/user')
 
-// importation middleware/password
-const password = require('../middleware/password');
+router.use( (req, res, next) => {
+    const event = new Date()
+    next()
+})
 
-// importation midlleware/email
-const email = require('../middleware/email');
+router.get('/', userCtrl.getAllUsers)
+router.get('/:id', userCtrl.getOneUser)
+router.delete('/:id', userCtrl.deleteUser)
 
-router.post('/', password, email, userCtrl.signup, userCtrl.login);
-// router.post('/login', userCtrl.login); 
-
-module.exports = router;
+module.exports = router

@@ -1,4 +1,3 @@
-
 const express = require('express');
 const router = express.Router();
 
@@ -8,12 +7,12 @@ const multer = require('../middleware/multer-config');
 const postCtrl = require('../controllers/post');
 
 // les routes
-router.get('/homepage', auth, postCtrl.getAllPost);
-router.post('/homepage', auth, multer, postCtrl.createPost);
+router.get('/home', auth, postCtrl.getAllPost);
+router.post('/create', auth, multer, postCtrl.createPost);
 router.get('/:id', auth, postCtrl.getOnePost);
-router.put('/:id', auth,  multer, postCtrl.modifyPost);
+router.put('/:id', auth,  multer, postCtrl.editPost);
 router.delete('/:id', auth, postCtrl.deletePost);
-router.post("/:id/like", auth, postCtrl.likePost);
+router.post("/like", auth, postCtrl.likePost);
 
 // exportation du module
 module.exports = router;
