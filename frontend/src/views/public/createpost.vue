@@ -1,7 +1,7 @@
 <script>
 import navbar from '../../components/navbar.vue'
 import { mapState } from 'vuex';
-import Axios from 'axios';
+import Axios from '../../store/caller.axios';
 
 export default {
     name: 'createPost',
@@ -12,8 +12,8 @@ export default {
 		return {
 			formData: {
 				userId: '',
-				nom: '',
-				prenom:'',
+				lastName: '',
+				firstName:'',
         		title: '',
         		description: '',
 				file:'',
@@ -66,7 +66,7 @@ export default {
 			const userId = this.$store.state.user.userId;
 			let input = this.$refs.fileInput
 			let imageUrl = input.files
-			Axios.post("http://localhost:3000/api/post/create", {
+			Axios.post("/post/create", {
 				userId: userId,
 				title: this.formData.title, 
 				description: this.formData.description,

@@ -1,6 +1,6 @@
 <script>
 import jwt_decode from "jwt-decode"
-import Axios from 'axios';
+import Axios from '../store/caller.axios';
 
 export default {
     name: 'profilecard',
@@ -23,7 +23,7 @@ export default {
         // const userId = this.$store.state.user.userId
         // console.log(userId)
         // if (window.confirm("Êtes-vous sûr de vouloir supprimer ce compte ? Cette action est irréversible")) {
-        //   Axios.delete('http://localhost:3000/api/user/'+userId)
+        //   Axios.delete('/user/'+userId)
         //   .then(res => localStorage.removeItem('user'),
         //   window.location.href  = "/login")
         //   .catch(err => console.log(err))
@@ -54,7 +54,7 @@ export default {
     <div class="card-body text-center">
       <img src="../assets/images/png-clipart-computer-icons-user-profile-avatar-avatar-heroes-monochrome.png" alt="avatar"
         class="rounded-circle img-fluid" style="width: 150px;">
-      <h5 class="my-3">{{ users.prenom }} {{ users.nom }}</h5>
+      <h5 class="my-3">{{ users.firstName }} {{ users.lastName }}</h5>
       <p class="text-muted mb-1">{{ users.email }}</p>
     </div>
   </section>

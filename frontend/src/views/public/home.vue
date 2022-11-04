@@ -54,6 +54,15 @@ export default {
 <template>
 <main class="home">
 
+<!------------ loading spinner ------------>
+    <div class="loading">
+        <div class="loading_loader">
+          <svg class="loading_loader_spin" viewBox="25 25 50 50">
+            <circle class="loading_loader_spin_circle" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+          </svg>
+        </div>
+      </div>
+
 <navbar></navbar>
 
 <div class="container mt-4 mb-5">
@@ -97,12 +106,88 @@ export default {
 </main>
 </template>
 
-<style>
+<style lang="scss">
 
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
 
 body {
   font-family: 'Lato', sans-serif;
+  animation-duration: 3s;
+}
+
+.loading {
+    position: absolute;
+    position: fixed;
+    height: 100vh;
+    inset: 0;
+    background-color: white;
+    opacity: 0.8;
+    z-index: 2;
+    animation: disappear 1.8s forwards;
+    pointer-events: none;
+&_loader {
+    position: relative;
+    margin: 0 auto;
+    width: 100px;
+    &:before {
+      content: '';
+      display: block;
+      padding: 350px;
+    }
+    &_spin {
+        animation: rotate 2s linear infinite;
+        height: 100%;
+        transform-origin: center center;
+        width: 100%;
+        position: absolute;
+        inset: 0;
+        margin: auto;
+        &_circle {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+        animation: dash 1s ease-in-out infinite, color 3s ease-in-out infinite;
+        stroke-linecap: round;
+        }
+    }
+  }
+}
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35px;
+  }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124px;
+  }
+}
+@keyframes color {
+  0% {
+    stroke: #ee7724;
+  }
+  33% {
+    stroke: #d8363a;
+  }
+  90% {
+    stroke: #dd3675;
+  }
+}
+@keyframes disappear {
+  90% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 .home {

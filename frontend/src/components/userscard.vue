@@ -1,5 +1,5 @@
 <script>
-import Axios from 'axios';
+import Axios from '../store/caller.axios';
 import { mapState } from "vuex";
 
 export default {
@@ -20,7 +20,7 @@ export default {
 
     methods: {
     getAllUsers() {
-      Axios.get('http://localhost:3000/api/user')
+      Axios.get('/user')
       .then(res => this.users = res.data)
       .catch(err => console.log(err))
     },
@@ -33,7 +33,7 @@ export default {
       //       "Cette fonctionnalité n'est pas encore disponible"
       //     )
       // ) 
-      // Axios.delete('http://localhost:3000/api/user/'+userId)
+      // Axios.delete('/user/'+userId)
       // .then(res => this.users.splice(index, 1))
       // .catch(err => console.log(err))
     }
@@ -56,7 +56,7 @@ export default {
           <font-awesome-icon class="trash" icon="fa-solid fa-trash-can" />
         </div>
         <div>
-          <p>{{ user.prenom }} {{ user.nom }}</p>
+          <p>{{ user.firstName }} {{ user.lastName }}</p>
           <p>{{ user.email }} </p>
         </div>
       </div>

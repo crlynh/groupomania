@@ -1,5 +1,5 @@
 <script>
-import Axios from 'axios';
+import Axios from '../store/caller.axios';
 import jwt_decode from "jwt-decode"
 
 import moment from 'moment/min/moment-with-locales'
@@ -31,7 +31,7 @@ export default {
 
       getAllPosts() {
         const token = this.$store.state.user.token
-        Axios.get('http://localhost:3000/api/post/home', {
+        Axios.get('/post/home', {
 					headers: {
 						['Authorization']: `Basic ${token}`,
 						"Content-Type": "multipart/form-data"            
@@ -44,7 +44,7 @@ export default {
       editPost(postId) {
         const token = this.$store.state.user.token;
         const userId = this.$store.state.user.userId
-        Axios.get('http://localhost:3000/api/post/'+postId, {
+        Axios.get('/post/'+postId, {
           headers: {
             ['Authorization']: `Basic ${token}`,
           },   
@@ -69,7 +69,7 @@ export default {
             "Êtes-vous sûr de vouloir supprimer cette publication ?"
           )
       ) 
-      Axios.delete('http://localhost:3000/api/post/'+postId, {
+      Axios.delete('/post/'+postId, {
 					headers: {
 						['Authorization']: `Basic ${token}`,
 					},        
@@ -86,7 +86,7 @@ export default {
         if (this.posts[index].post.usersLiked.includes(userId)=== true) {
           liked = -1
         }
-          Axios.post(`http://localhost:3000/api/post/like`, {
+          Axios.post('/post/like', {
             userId: userId,
             _id: postId,
             likes: liked
@@ -122,7 +122,7 @@ export default {
   <div class="d-flex flex-row justify-content-between align-items-center p-3">
     <div class="d-flex flex-row align-items-center feed-text px-2"><img class="rounded-circle shadow-2" style="width: 45px;" alt="Avatar" src="../assets/images/png-clipart-computer-icons-user-profile-avatar-avatar-heroes-monochrome.png">
         <div class="d-flex flex-column flex-wrap ml-2">
-            <span class="font-weight-bold">{{post.user.prenom}} {{post.user.nom}}</span>
+            <span class="font-weight-bold">{{post.user.firstName}} {{post.user.lastName}}</span>
             <span class="text-black-50 time">Posté il y a {{ dateTime(post.post.createAt) }}</span>
         </div>
     </div>

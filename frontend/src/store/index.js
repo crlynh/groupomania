@@ -1,9 +1,5 @@
 import { createStore } from 'vuex'
-
-import axios from 'axios';
-let Axios = axios.create({
-    baseURL: 'http://localhost:3000/api/auth'
-})
+import Axios from './caller.axios'
 
 let user = localStorage.getItem('user');
 if (!user) {
@@ -52,7 +48,7 @@ const store = createStore({
     login: ({commit}, data) => {
       commit('setStatus', 'loading');
       return new Promise((resolve, reject) => {
-        Axios.post('/login', data)
+        Axios.post('/auth/login', data)
         .then((response) => {
           commit('setStatus', 'login');
           commit('logUser', response.data);
@@ -71,7 +67,7 @@ const store = createStore({
       commit('setStatus', 'loading');
       return new Promise((resolve, reject) => {
         commit;
-        Axios.post('/signup', data)
+        Axios.post('/auth/signup', data)
         .then((response) => {
           commit('setStatus', 'created');
           resolve(response);

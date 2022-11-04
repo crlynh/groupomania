@@ -8,8 +8,8 @@ exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
     .then(hash => {
         const user = new User({
-        nom: req.body.nom,
-        prenom: req.body.prenom,
+        lastName: req.body.lastName,
+        firstName: req.body.firstName,
         email: req.body.email,
         password: hash
         });
@@ -36,8 +36,8 @@ exports.login = (req, res, next) => {
                         userId: user._id,
                         token: jwt.sign(
                             { userId: user._id,
-                            nom: user.nom,
-                            prenom: user.prenom,
+                            lastName: user.lastName,
+                            firstName: user.firstName,
                             email: user.email,
                             role: user.role
                             },
