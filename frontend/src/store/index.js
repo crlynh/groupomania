@@ -1,4 +1,8 @@
 import { createStore } from 'vuex'
+<<<<<<< HEAD
+=======
+
+>>>>>>> 833d01da785b73cccc14a7ba0624ed0ca2f0caa5
 import Axios from './caller.axios'
 
 let user = localStorage.getItem('user');

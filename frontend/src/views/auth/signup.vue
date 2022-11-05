@@ -88,7 +88,7 @@ export default {
                         v-model="lastName"
                         type="text" 
                         class="form-control" 
-                        placeholder="Nom"
+                        placeholder="lastName"
                         />
                     </div>
                   </div>
@@ -98,7 +98,7 @@ export default {
                         v-model="firstName"
                         type="text" 
                         class="form-control" 
-                        placeholder="Prénom" 
+                        placeholder="firstName" 
                         />
                     </div>
                   </div>

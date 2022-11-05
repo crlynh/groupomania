@@ -9,6 +9,7 @@ import jwt_decode from "jwt-decode"
 
 export default {
     name: 'home',
+
     components: {
         navbar,
         profilecard,
@@ -16,6 +17,7 @@ export default {
         footerpage,
         userscard,
     },
+
     methods: {
       getUserData() {
         const token = this.$store.state.user.token
@@ -23,10 +25,13 @@ export default {
         this.users = decoded
         return this.users
       },
+<<<<<<< HEAD
 
       scrollToTop() {
         window.scrollTo(0, top);
       }
+=======
+>>>>>>> 833d01da785b73cccc14a7ba0624ed0ca2f0caa5
     },
 
   mounted() {
@@ -69,12 +74,13 @@ export default {
             </button>
           </router-link>
         </div>
-        <card></card>
+            <card></card>
       </div>
     </div>
   </div>
 </div>
 
+<<<<<<< HEAD
 
 <!-- ScrollToTop Button -->
 <div class="bloc-button btn btn-d scrollToTop" @click.native="scrollToTop()">
@@ -82,6 +88,8 @@ export default {
 </div>
 <!-- ScrollToTop Button END-->
 
+=======
+>>>>>>> 833d01da785b73cccc14a7ba0624ed0ca2f0caa5
 <footerpage></footerpage>
 </main>
 </template>
@@ -131,11 +139,19 @@ body {
     }
   }
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 833d01da785b73cccc14a7ba0624ed0ca2f0caa5
 @keyframes rotate {
   100% {
     transform: rotate(360deg);
   }
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 833d01da785b73cccc14a7ba0624ed0ca2f0caa5
 @keyframes dash {
   0% {
     stroke-dasharray: 1, 200;
@@ -150,6 +166,10 @@ body {
     stroke-dashoffset: -124px;
   }
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 833d01da785b73cccc14a7ba0624ed0ca2f0caa5
 @keyframes color {
   0% {
     stroke: #ee7724;
@@ -161,6 +181,10 @@ body {
     stroke: #dd3675;
   }
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 833d01da785b73cccc14a7ba0624ed0ca2f0caa5
 @keyframes disappear {
   90% {
     opacity: 0.8;

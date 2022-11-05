@@ -1,6 +1,10 @@
 <script>
 import jwt_decode from "jwt-decode"
+<<<<<<< HEAD
 import Axios from '../store/caller.axios';
+=======
+import Axios from '../store/caller.axios'
+>>>>>>> 833d01da785b73cccc14a7ba0624ed0ca2f0caa5
 
 export default {
     name: 'profilecard',

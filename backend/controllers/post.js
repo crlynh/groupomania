@@ -10,6 +10,7 @@ exports.getAllPost = async (req, res, next) => {
     result = []
 
     let posts = await Post.find().sort({ createAt: -1 })
+    console.log(posts)
 
     for (let i = 0; i < posts.length; i++) {
         let user = await User.findOne({ _id: posts[i].userId })
