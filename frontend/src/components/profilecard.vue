@@ -21,7 +21,6 @@ export default {
       deleteUser() {
         alert("Cette fonctionnalité n'est pas encore disponible")
         // const userId = this.$store.state.user.userId
-        // console.log(userId)
         // if (window.confirm("Êtes-vous sûr de vouloir supprimer ce compte ? Cette action est irréversible")) {
         //   Axios.delete('/user/'+userId)
         //   .then(res => localStorage.removeItem('user'),

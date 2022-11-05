@@ -49,7 +49,7 @@ export default {
 
 <template >
   <section class="listusers card rounded border pb-2" >
-    <div class="card-body text-center ">
+    <div class="card-body text-center overflow-auto">
       <h5 class="pb-4">Liste des utilisateurs ({{ numberOfUsers }})</h5>
       <div class="mb-3 card cardusers pt-2" v-for="(user,index) in users" :key="user._id">
         <div class="del" @click="deleteUsers(index)">
@@ -68,6 +68,7 @@ export default {
 
 .listusers {
   background-color: #D9D9D9;
+  height: 400px;
 }
 
 
