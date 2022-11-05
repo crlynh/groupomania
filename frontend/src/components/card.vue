@@ -1,9 +1,5 @@
 <script>
-<<<<<<< HEAD
 import Axios from '../store/caller.axios';
-=======
-import Axios from '../store/caller.axios'
->>>>>>> 833d01da785b73cccc14a7ba0624ed0ca2f0caa5
 import jwt_decode from "jwt-decode"
 
 import moment from 'moment/min/moment-with-locales'
@@ -73,11 +69,7 @@ export default {
             "Êtes-vous sûr de vouloir supprimer cette publication ?"
           )
       ) 
-<<<<<<< HEAD
       Axios.delete('/post/'+postId, {
-=======
-      Axios.delete('post/'+postId, {
->>>>>>> 833d01da785b73cccc14a7ba0624ed0ca2f0caa5
 					headers: {
 						['Authorization']: `Basic ${token}`,
 					},        
@@ -130,11 +122,7 @@ export default {
   <div class="d-flex flex-row justify-content-between align-items-center p-3">
     <div class="d-flex flex-row align-items-center feed-text px-2"><img class="rounded-circle shadow-2" style="width: 45px;" alt="Avatar" src="../assets/images/png-clipart-computer-icons-user-profile-avatar-avatar-heroes-monochrome.png">
         <div class="d-flex flex-column flex-wrap ml-2">
-<<<<<<< HEAD
-            <span class="font-weight-bold">{{post.user.firstName}} {{post.user.lastName}}</span>
-=======
             <span class="font-weight-bold">{{ post.user.firstName }} {{ post.user.lastName }}</span>
->>>>>>> 833d01da785b73cccc14a7ba0624ed0ca2f0caa5
             <span class="text-black-50 time">Posté il y a {{ dateTime(post.post.createAt) }}</span>
         </div>
     </div>

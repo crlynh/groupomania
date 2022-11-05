@@ -1,11 +1,7 @@
 <script>
 import navbar from '../../components/navbar.vue'
 import { mapState } from 'vuex';
-<<<<<<< HEAD
-import Axios from '../../store/caller.axios';
-=======
 import Axios from '../../store/caller.axios'
->>>>>>> 833d01da785b73cccc14a7ba0624ed0ca2f0caa5
 
 export default {
     name: 'createPost',
@@ -18,13 +14,8 @@ export default {
 				userId: '',
 				lastName: '',
 				firstName:'',
-<<<<<<< HEAD
-				title: '',
-				description: '',
-=======
         		title: '',
         		description: '',
->>>>>>> 833d01da785b73cccc14a7ba0624ed0ca2f0caa5
 				file:'',
 				titleError:'',
 				titleMinLength: 2,
@@ -75,11 +66,7 @@ export default {
 			const userId = this.$store.state.user.userId;
 			let input = this.$refs.fileInput
 			let imageUrl = input.files
-<<<<<<< HEAD
-			Axios.post("/post/create", {
-=======
 			Axios.post('/post/create', {
->>>>>>> 833d01da785b73cccc14a7ba0624ed0ca2f0caa5
 				userId: userId,
 				title: this.formData.title, 
 				description: this.formData.description,
