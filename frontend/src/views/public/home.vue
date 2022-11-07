@@ -25,12 +25,15 @@ export default {
         this.users = decoded
         return this.users
       },
+
+      scrollToTop() {
+        window.scrollTo(0, top);
+      }
     },
 
   mounted() {
     this.getUserData()
   }
-
 }
 </script>
 
@@ -73,6 +76,13 @@ export default {
     </div>
   </div>
 </div>
+
+
+<!-- ScrollToTop Button -->
+<div class="bloc-button btn btn-d scrollToTop" @click.native="scrollToTop()">
+  <font-awesome-icon icon="fa-chevron-up"/>
+</div>
+<!-- ScrollToTop Button END-->
 
 <footerpage></footerpage>
 </main>
@@ -123,13 +133,11 @@ body {
     }
   }
 }
-
 @keyframes rotate {
   100% {
     transform: rotate(360deg);
   }
 }
-
 @keyframes dash {
   0% {
     stroke-dasharray: 1, 200;
@@ -144,7 +152,6 @@ body {
     stroke-dashoffset: -124px;
   }
 }
-
 @keyframes color {
   0% {
     stroke: #ee7724;
@@ -156,7 +163,6 @@ body {
     stroke: #dd3675;
   }
 }
-
 @keyframes disappear {
   90% {
     opacity: 0.8;
@@ -175,13 +181,24 @@ background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
 --bs-btn-border-color: none;
 }
 
-#btn-back-to-top {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  display: none;
+.scrollToTop {
+    width: 40px;
+    height: 40px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 500;
+    & svg {
+      font-size: 15px
+    }
 }
 
+.btn-d,
+.btn-d:hover,
+.btn-d:focus {
+    color: #FFF;
+    background: rgba(0, 0, 0, .3);
+}
 
 @media (min-width: 320px) and (max-width: 768px) {
   .allcards {

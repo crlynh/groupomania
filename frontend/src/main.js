@@ -9,11 +9,11 @@ import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 
 import App from './App.vue'
 import router from './router'
-import store from './store' 
-import axios from './store'
+import store from './store/' 
 
 const app = createApp(App)
 
@@ -23,10 +23,10 @@ library.add(faEllipsisVertical)
 library.add(faArrowLeft)
 library.add(faPlus)
 library.add(faTrashCan)
+library.add(faChevronUp)
 
 createApp(App)
 .use(router)
 .use(store)
-.use(axios)
 .component("font-awesome-icon", FontAwesomeIcon)
 .mount('#app')

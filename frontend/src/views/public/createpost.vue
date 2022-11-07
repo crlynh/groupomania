@@ -17,7 +17,7 @@ export default {
         		title: '',
         		description: '',
 				file:'',
-        		titleError:'',
+				titleError:'',
 				titleMinLength: 2,
 				titleMaxLength: 50,
 				},
@@ -27,26 +27,26 @@ export default {
 	},
 
 	computed: {
-    	...mapState(['status']),  
+		...mapState(['status']),  
 		validatedFields() {
 			if (this.formData.title !== "" && this.formData.titleError !== true) {
-            	return true
+				return true
 			} else {
             return false
 			}
-    	},
+		},
 	},
 
 	methods: {
-      	isTitleValid() {
-        	if (this.formData.title !== "" || 
+		isTitleValid() {
+		if (this.formData.title !== "" || 
 			this.formData.title.length <= this.formData.titleMinlength || 
 			this.formData.title.length >= this.formData.titleMaxlength) {
-          		this.formData.titleError = false;
-        	} else {
-          		this.formData.titleError = true;
-        	}
-      	},
+				this.formData.titleError = false;
+			} else {
+			this.formData.titleError = true;
+			}
+		},
 
 		pickFile() {
 			let input = this.$refs.fileInput

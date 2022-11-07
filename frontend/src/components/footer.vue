@@ -7,12 +7,10 @@ export default {
 </script>
 
 <template>
+
 <!-- Footer -->
 <footer class="text-center text-lg-start text-muted bg-gradient">
-  <!-- Section: Social media -->
   <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
-
-    <!-- Right -->
     <div>
       <!-- <a href="" class="me-4 text-reset">
         <i class="fab fa-facebook-f"></i>
@@ -24,11 +22,10 @@ export default {
         <i class="fab fa-linkedin"></i>
       </a> -->
     </div>
-    <!-- Right -->
   </section>
-  <!-- Section: Social media -->
 </footer>
 <!-- Footer -->
+
 </template>
 
 <style>

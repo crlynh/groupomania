@@ -1,5 +1,5 @@
 <script>
-import Axios from '../store/caller.axios'
+import Axios from '../store/caller.axios';
 import jwt_decode from "jwt-decode"
 
 import moment from 'moment/min/moment-with-locales'
@@ -69,7 +69,7 @@ export default {
             "Êtes-vous sûr de vouloir supprimer cette publication ?"
           )
       ) 
-      Axios.delete('post/'+postId, {
+      Axios.delete('/post/'+postId, {
 					headers: {
 						['Authorization']: `Basic ${token}`,
 					},        

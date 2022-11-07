@@ -87,6 +87,7 @@ export default {
               <!-- Password input -->
               <div class="form-outline mb-4">
                 <input 
+                  autocomplete="on"
                   v-model="password"
                   type="password" 
                   class="form-control" 

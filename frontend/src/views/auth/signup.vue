@@ -87,7 +87,6 @@ export default {
                       <input 
                         v-model="lastName"
                         type="text" 
-                        id="form3Example1" 
                         class="form-control" 
                         placeholder="lastName"
                         />
@@ -98,7 +97,6 @@ export default {
                       <input 
                         v-model="firstName"
                         type="text" 
-                        id="form3Example2" 
                         class="form-control" 
                         placeholder="firstName" 
                         />
@@ -111,7 +109,6 @@ export default {
                 <input 
                   v-model="email"
                   type="email" 
-                  id="form3Example3" 
                   class="form-control" 
                   placeholder="Adresse mail"
                   @focusout="isEmailValid"
@@ -122,9 +119,9 @@ export default {
               <!-- Password input -->
               <div class="form-outline mb-4">
                 <input 
+                  autocomplete="on"
                   v-model="password"
                   type="password" 
-                  id="form3Example4" 
                   class="form-control" 
                   placeholder="Mot de passe" 
                   @focusout="isPasswordValid"
