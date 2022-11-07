@@ -36,7 +36,7 @@ Cloner ce repository
    
 * Le message suivant doit s'afficher 
    ```sh
-    > groupomania-backend@0.1.0 start
+    > groupomania-backend@1.1.0 start
     > node server.js
 
     Listening on port 3000
