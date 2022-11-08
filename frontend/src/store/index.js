@@ -26,7 +26,6 @@ const store = createStore({
     user: user,
     data: {
       email: '',
-      isAdmin: false,
     },
   },
   mutations: {
