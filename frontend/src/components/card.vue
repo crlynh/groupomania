@@ -7,8 +7,6 @@ import 'moment/locale/fr'
 
 export default {
     name:'card',
-    components: {
-    },
 
     data() {
       return {
