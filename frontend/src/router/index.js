@@ -31,9 +31,6 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    if(to.matched[0].name == 'admin') {
-        authGuard()
-    }
     if(to.matched[0].name == 'public') {
         authGuard()
     }
